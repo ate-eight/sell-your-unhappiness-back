@@ -1,0 +1,14 @@
+plugins {
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+}
+
+bootJar {
+    enabled = true
+}
+jar { // 라이브러리화 False
+    enabled = false
+}
