@@ -31,6 +31,7 @@ jobs:
           format: YYYY-MM-DDTHH-mm-ss
           utcOffset: "+09:00"
 
+
       # 3 배포용 패키지 경로 저장
       - name: Set artifact for sellyourunhappiness-api
         run: echo "artifact=$(ls ./sellyourunhappiness-api/build/libs)" >> $GITHUB_ENV
