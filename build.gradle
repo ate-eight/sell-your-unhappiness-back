@@ -10,6 +10,7 @@ repositories {
 
 bootJar.enabled = false // 실행 파일 False
 
+
 subprojects { //모듈 공통 적용할 사항들
 	group = 'xyz.sellyourunhappiness'
 	version = '0.0.1-SNAPSHOT'
