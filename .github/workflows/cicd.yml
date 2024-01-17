@@ -19,9 +19,9 @@ jobs:
         run: chmod +x gradlew
 
 
-          # sellyourhappiness-api 모듈만 빌드
-      - name: Build sellyourhappiness-api with Gradle
-        run: ./gradlew clean :sellyourhappiness-api:build
+          # sellyourunhappiness-api 모듈만 빌드
+      - name: Build sellyourunhappiness-api with Gradle
+        run: ./gradlew clean :sellyourunhappiness-api:build
 
       #2 현재시간가져오기
       - name: Get current time
@@ -32,8 +32,8 @@ jobs:
           utcOffset: "+09:00"
 
       # 3 배포용 패키지 경로 저장
-      - name: Set artifact for sellyourhappiness-api
-        run: echo "artifact=$(ls ./sellyourhappiness-api/build/libs)" >> $GITHUB_ENV
+      - name: Set artifact for sellyourunhappiness-api
+        run: echo "artifact=$(ls ./sellyourunhappiness-api/build/libs)" >> $GITHUB_ENV
 
       # 4 빈스토크 배포
       - name: Beanstalk Deploy
@@ -45,4 +45,4 @@ jobs:
           environment_name: Sellyourunhappiness-env-1
           version_label: github-action-${{steps.current-time.outputs.formattedTime}}
           region: ap-northeast-2
-          deployment_package: ./sellyourhappiness-api/build/libs/${{env.artifact}}
+          deployment_package: ./sellyourunhappiness-api/build/libs/${{env.artifact}}
