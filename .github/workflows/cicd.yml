@@ -36,6 +36,7 @@ jobs:
       - name: Set artifact for sellyourunhappiness-api
         run: echo "artifact=$(ls ./sellyourunhappiness-api/build/libs)" >> $GITHUB_ENV
 
+
       # 4 빈스토크 배포
       - name: Beanstalk Deploy
         uses: einaregilsson/beanstalk-deploy@v20
