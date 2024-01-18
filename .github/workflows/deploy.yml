@@ -3,7 +3,7 @@ name: CI-CD
 on:
   push:
     branches:
-      - main
+      - feat/githubactions
 
 env:
   S3_BUCKET_NAME: sellyourunhappiness-github-actions
