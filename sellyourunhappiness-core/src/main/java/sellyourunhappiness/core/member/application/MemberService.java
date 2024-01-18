@@ -14,6 +14,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
+
     @Transactional
     public Member saveTest(String name, String nickname) {
         Member member = Member.create(name, nickname, MemberType.one);
