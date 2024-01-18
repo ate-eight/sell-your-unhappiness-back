@@ -1,5 +1,5 @@
 #!/bin/bash
-PROJECT_NAME="github_action"
+PROJECT_NAME="sellyourunhappiness"
 JAR_PATH="/github-action/sellyourunhappiness-api/build/libs/*.jar" # 경로 수정
 DEPLOY_PATH=/home/ubuntu/$PROJECT_NAME/
 DEPLOY_LOG_PATH="/home/ubuntu/$PROJECT_NAME/deploy.log"
