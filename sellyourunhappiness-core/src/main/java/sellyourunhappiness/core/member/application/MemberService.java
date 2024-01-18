@@ -13,6 +13,7 @@ import sellyourunhappiness.core.member.infrastructure.MemberRepository;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+
     @Transactional
     public Member save(String name, String nickname, MemberType grade) {
         Member member = Member.create(name, nickname, grade);
