@@ -1,11 +1,11 @@
 #!/bin/bash
 PROJECT_NAME="github_action"
-JAR_PATH="/home/ubuntu/github_action/build/libs/*.jar"
+JAR_PATH="/github-action/sellyourunhappiness-api/build/libs/*.jar" # 경로 수정
 DEPLOY_PATH=/home/ubuntu/$PROJECT_NAME/
 DEPLOY_LOG_PATH="/home/ubuntu/$PROJECT_NAME/deploy.log"
 DEPLOY_ERR_LOG_PATH="/home/ubuntu/$PROJECT_NAME/deploy_err.log"
 APPLICATION_LOG_PATH="/home/ubuntu/$PROJECT_NAME/application.log"
-BUILD_JAR=$(ls $JAR_PATH)
+BUILD_JAR=$(ls $JAR_PATH) # 수정된 경로에 있는 .jar 파일을 찾습니다.
 JAR_NAME=$(basename $BUILD_JAR)
 
 echo "===== 배포 시작 : $(date +%c) =====" >> $DEPLOY_LOG_PATH
