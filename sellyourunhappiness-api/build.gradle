@@ -27,6 +27,9 @@ dependencies {
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
     testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.17.1'
     swaggerUI 'org.webjars:swagger-ui:4.11.1'
+    implementation 'net.gpedro.integrations.slack:slack-webhook:1.4.0'
+    implementation 'org.aspectj:aspectjweaver:1.9.19'
+
 }
 
 bootJar {
