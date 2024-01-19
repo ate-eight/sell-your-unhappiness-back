@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import sellyourunhappiness.api.member.application.MemberBroker;
 import sellyourunhappiness.api.member.dto.MemberResisterParam;
 import sellyourunhappiness.core.member.domain.Member;
+import sellyourunhappiness.util.slack.SlackNotification;
 
 @RestController
 @RequiredArgsConstructor

@@ -20,3 +20,7 @@ spring:
 logging:
   level:
     org.hibernate.sql: trace
+
+sellyourunhappiness:
+  slack:
+    token: T06C30DKWR1/B06EHSJA9GV/EmcTfUsZbizVV5hvtcZ92IzT
