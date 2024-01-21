@@ -2,7 +2,6 @@ package sellyourunhappiness.api.member.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,9 +14,8 @@ import sellyourunhappiness.core.member.domain.Member;
 public class MemberController {
 
     private final MemberBroker memberBroker;
-    @GetMapping("/v1/member")
-    public ResponseEntity<Member> createMember(@RequestBody MemberResisterParam param) {
-        System.out.println("asdfasf");
+    @PostMapping("/v1/member")
+    public ResponseEntity<Member> create(@RequestBody MemberResisterParam param) {
         return ResponseEntity.ok(memberBroker.save(param));
     }
 
