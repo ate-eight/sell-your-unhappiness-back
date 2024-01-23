@@ -1,14 +1,60 @@
 plugins {
+    id 'com.epages.restdocs-api-spec' version "0.17.1" // Restdocs 플러그인
+    id 'org.hidetake.swagger.generator' version "2.18.2" // Swagger 플러그인
+}
+
+swaggerSources {
+    sample {
+        setInputFile(file("${project.buildDir}/api-spec/openapi3.yaml"))//스웨거 설정 소스 추가 , api스펙 위치 지정
+    }
+}
+
+openapi3 {
+    setServer("http://localhost:8080")// 서버 주소 설정, API 요청 보내기 기능 주소
+    title = "restdocs-swagger API Documentation" // API 문서 제목
+    description = "Spring REST Docs + SwaggerUI Sample" // API 문서 설명
+    version = "0.0.1" // API 문서 버전
+    format = "yaml" // 문서 출력 포맷 기본은 JSON
 }
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // Spring REST Docs + Swagger 의존성 추가
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.17.1'
+    swaggerUI 'org.webjars:swagger-ui:4.11.1'
 }
 
 bootJar {
     enabled = true
 }
+
+bootJar {
+    dependsOn generateSwaggerUISample
+    from("${generateSwaggerUISample.outputDir}") {
+        into 'static/docs' //bootJar 실행전 generateSwaggerUISample 실행해  openAPI3스펙을 SwaggerUI로 생성해 into주소로 보낸다.
+    }
+}
+
 jar { // 라이브러리화 False
     enabled = false
+}
+
+tasks.withType(GenerateSwaggerUI) {
+    dependsOn 'openapi3' //GenerateSwaggerUI 테스크가 openapi3 Task를 의존하도록 설정
+    doFirst {
+        def swaggerUIFile = file("${openapi3.outputDirectory}/openapi3.yaml")
+
+        def securitySchemesContent =  "  securitySchemes:\n" +  \
+                                      "    APIKey:\n" +  \
+                                      "      type: apiKey\n" +  \
+                                      "      name: Authorization\n" +  \
+                                      "      in: header\n" + \
+                                      "security:\n" +
+                "  - APIKey: []  # Apply the security scheme here"
+        // 헤더 부분 설정 본 예제에서는 미사용.
+        swaggerUIFile.append securitySchemesContent
+    }
 }
