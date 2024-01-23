@@ -14,7 +14,7 @@ public class MemberBroker {
     private final MemberService memberService;
 
     public Member save(MemberResisterParam param) {
-        return memberService.saveTest(param.name(), param.nickname());
+        return memberService.save(param.name(), param.nickname(), param.grade());
     }
 
 }
