@@ -2,8 +2,9 @@
 name: Issue Template
 about: Describe this issue template's purpose here.
 title: "[Feat/Fix/Refactoring] / [기능 식별자] 간단 내용 ex) [Feat/M-0001] 로그인 기능 구현"
-labels: ''
-assignees: ''
+labels: FEAT
+assignees: JuSeong1130
+
 
 ---
 
