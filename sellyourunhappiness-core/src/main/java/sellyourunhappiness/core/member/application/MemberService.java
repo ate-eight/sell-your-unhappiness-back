@@ -16,7 +16,7 @@ public class MemberService {
 
     @Transactional
     public Member save(String name, String nickname, MemberType grade) {
-        Member member = Member.create(name, nickname, grade);
+        Member member = Member.create("test", nickname, grade);
         return memberRepository.save(member);
     }
 }
