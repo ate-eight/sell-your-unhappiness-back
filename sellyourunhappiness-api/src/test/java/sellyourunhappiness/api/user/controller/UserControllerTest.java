@@ -40,7 +40,7 @@
 // import sellyourunhappiness.core.user.domain.enums.SocialType;
 // import sellyourunhappiness.core.user.domain.enums.UserStatus;
 // import sellyourunhappiness.global.config.jwt.JwtTokenFilter;
-// import sellyourunhappiness.global.exception.ErrorDetectAdvisor;
+// import sellyourunhappiness.global.slack.exception.ErrorDetectAdvisor;
 //
 //
 // @MockBean(JpaMetamodelMappingContext.class)

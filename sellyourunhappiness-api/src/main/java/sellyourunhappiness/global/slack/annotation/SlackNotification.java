@@ -1,4 +1,4 @@
-package sellyourunhappiness.global.slack;
+package sellyourunhappiness.global.slack.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

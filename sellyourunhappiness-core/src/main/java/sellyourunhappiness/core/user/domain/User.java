@@ -16,10 +16,10 @@ import sellyourunhappiness.core.user.domain.enums.Role;
 import sellyourunhappiness.core.user.domain.enums.SocialType;
 import sellyourunhappiness.core.user.domain.enums.UserStatus;
 
-@Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Entity
 @Table(name = "Users")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
+@Entity
 public class User {
 	@Id
 	@Column(name = "user_id")

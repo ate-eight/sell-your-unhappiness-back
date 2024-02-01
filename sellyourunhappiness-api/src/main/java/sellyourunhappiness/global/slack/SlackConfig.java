@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import net.gpedro.integrations.slack.SlackApi;
 
 @Configuration
-public class SlackLogAppenderConfig {
+public class SlackConfig {
 
 	@Value("${sellyourunhappiness.slack.token}")
 	private String token;

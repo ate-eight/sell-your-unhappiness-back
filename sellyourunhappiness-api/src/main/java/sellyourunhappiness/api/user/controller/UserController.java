@@ -1,4 +1,5 @@
 package sellyourunhappiness.api.user.controller;
+
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
@@ -7,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
-
 
 import lombok.RequiredArgsConstructor;
 import sellyourunhappiness.api.user.application.UserBroker;
@@ -31,7 +31,6 @@ public class UserController {
 	public String main() {
 		return "main";
 	}
-
 
 	@GetMapping("/v1/user/info")
 	public BaseResponse<UserInfo> getUserInfo(@AuthenticationPrincipal CustomOAuth2User customOAuth2User) {

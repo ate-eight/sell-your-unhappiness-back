@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
+
 import lombok.Getter;
 import sellyourunhappiness.core.user.domain.enums.Role;
 
