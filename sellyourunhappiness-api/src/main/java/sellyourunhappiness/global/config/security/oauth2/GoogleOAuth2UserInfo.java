@@ -1,6 +1,8 @@
-package sellyourunhappiness.core.user.application;
+package sellyourunhappiness.global.config.security.oauth2;
 
 import java.util.Map;
+
+import sellyourunhappiness.global.config.security.oauth2.abstracts.OAuth2UserInfo;
 
 public class GoogleOAuth2UserInfo extends OAuth2UserInfo {
 

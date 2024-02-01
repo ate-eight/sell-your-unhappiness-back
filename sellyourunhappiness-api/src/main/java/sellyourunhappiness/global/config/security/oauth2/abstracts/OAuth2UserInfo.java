@@ -1,4 +1,4 @@
-package sellyourunhappiness.core.user.application;
+package sellyourunhappiness.global.config.security.oauth2.abstracts;
 
 import java.util.Map;
 

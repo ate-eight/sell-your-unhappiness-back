@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 import sellyourunhappiness.api.user.application.UserBroker;
 import sellyourunhappiness.api.user.dto.UserInfo;
-import sellyourunhappiness.global.config.security.oauth.CustomOAuth2User;
+import sellyourunhappiness.global.config.security.oauth2.CustomOAuth2User;
 import sellyourunhappiness.core.user.domain.User;
 import sellyourunhappiness.global.response.BaseResponse;
 

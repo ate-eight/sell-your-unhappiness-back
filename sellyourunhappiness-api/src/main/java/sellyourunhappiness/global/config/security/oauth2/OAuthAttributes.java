@@ -1,4 +1,4 @@
-package sellyourunhappiness.core.user.application;
+package sellyourunhappiness.global.config.security.oauth2;
 
 import java.util.Map;
 
@@ -8,6 +8,7 @@ import sellyourunhappiness.core.user.domain.User;
 import sellyourunhappiness.core.user.domain.enums.Role;
 import sellyourunhappiness.core.user.domain.enums.UserStatus;
 import sellyourunhappiness.core.user.domain.enums.SocialType;
+import sellyourunhappiness.global.config.security.oauth2.abstracts.OAuth2UserInfo;
 
 @Getter
 public class OAuthAttributes {

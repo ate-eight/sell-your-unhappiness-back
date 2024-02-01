@@ -180,7 +180,7 @@ import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
 
 import sellyourunhappiness.api.user.application.UserBroker;
-import sellyourunhappiness.global.config.security.oauth.CustomOAuth2User;
+import sellyourunhappiness.global.config.security.oauth2.CustomOAuth2User;
 import sellyourunhappiness.core.user.application.JwtService;
 import sellyourunhappiness.core.user.domain.User;
 import sellyourunhappiness.core.user.domain.enums.Role;

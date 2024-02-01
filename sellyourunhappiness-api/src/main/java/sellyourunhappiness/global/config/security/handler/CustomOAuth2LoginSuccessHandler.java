@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import sellyourunhappiness.global.config.security.oauth.CustomOAuth2User;
+import sellyourunhappiness.global.config.security.oauth2.CustomOAuth2User;
 import sellyourunhappiness.core.user.application.JwtService;
 
 @Slf4j

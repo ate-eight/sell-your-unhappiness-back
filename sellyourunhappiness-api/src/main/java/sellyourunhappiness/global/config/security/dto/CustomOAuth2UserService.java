@@ -15,8 +15,8 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import sellyourunhappiness.api.user.application.UserBroker;
-import sellyourunhappiness.global.config.security.oauth.CustomOAuth2User;
-import sellyourunhappiness.core.user.application.OAuthAttributes;
+import sellyourunhappiness.global.config.security.oauth2.CustomOAuth2User;
+import sellyourunhappiness.global.config.security.oauth2.OAuthAttributes;
 import sellyourunhappiness.core.user.domain.User;
 import sellyourunhappiness.core.user.domain.enums.SocialType;
 

@@ -1,4 +1,4 @@
-package sellyourunhappiness.global.config.security.oauth;
+package sellyourunhappiness.global.config.security.oauth2;
 
 import java.util.Collection;
 import java.util.Map;

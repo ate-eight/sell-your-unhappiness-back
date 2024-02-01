@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import sellyourunhappiness.core.user.application.JwtService;
-import sellyourunhappiness.core.user.application.OAuthAttributes;
+import sellyourunhappiness.global.config.security.oauth2.OAuthAttributes;
 import sellyourunhappiness.core.user.application.UserService;
 import sellyourunhappiness.core.user.domain.User;
 import sellyourunhappiness.core.user.domain.enums.SocialType;
@@ -27,9 +27,13 @@ public class UserBroker {
 	}
 
 	public User getUser(OAuthAttributes attributes, SocialType socialType) {
-		User findUser = userService.findBySocialTypeAndEmail(socialType, attributes.getOauth2UserInfo().getEmail())
-			.orElseGet(() -> userService.saveUser(attributes, socialType));
-		return findUser;
-	}
+		return userService.findBySocialTypeAndEmail(socialType, attributes.getOauth2UserInfo().getEmail())
+			.orElseGet(() -> {
+				String name = attributes.getOauth2UserInfo().getNickname();
+				String email = attributes.getOauth2UserInfo().getEmail();
+				String profileUrl = attributes.getOauth2UserInfo().getImageUrl();
 
+				return userService.saveUser(name, email, profileUrl, socialType);
+			});
+	}
 }
