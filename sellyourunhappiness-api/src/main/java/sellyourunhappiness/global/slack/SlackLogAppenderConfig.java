@@ -1,4 +1,4 @@
-package sellyourunhappiness.util.slack;
+package sellyourunhappiness.global.slack;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

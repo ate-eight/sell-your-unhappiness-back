@@ -1,4 +1,4 @@
-package sellyourunhappiness.util.exception;
+package sellyourunhappiness.global.exception;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -13,15 +13,16 @@ import net.gpedro.integrations.slack.SlackField;
 import net.gpedro.integrations.slack.SlackMessage;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
+
 
 @ControllerAdvice
+@RequiredArgsConstructor
 public class ErrorDetectAdvisor {
+
 
 	private final SlackApi slackApi;
 
-	public ErrorDetectAdvisor(SlackApi slackApi) {
-		this.slackApi = slackApi;
-	}
 
 	@ExceptionHandler(Exception.class)
 	public void handleException(HttpServletRequest req, Exception e) throws Exception {

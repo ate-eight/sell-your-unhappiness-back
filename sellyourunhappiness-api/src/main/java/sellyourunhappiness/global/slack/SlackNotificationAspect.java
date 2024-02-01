@@ -1,4 +1,4 @@
-package sellyourunhappiness.util.slack;
+package sellyourunhappiness.global.slack;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -25,7 +25,7 @@ public class SlackNotificationAspect {
 	private final ThreadPoolTaskExecutor threadPoolTaskExecutor;
 
 
-	@Around("@annotation(sellyourunhappiness.util.slack.SlackNotification)")
+	@Around("@annotation(sellyourunhappiness.global.slack.SlackNotification)")
 	public Object slackNotification(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 		Object result = proceedingJoinPoint.proceed();
 

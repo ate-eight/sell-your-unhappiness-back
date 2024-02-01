@@ -1,4 +1,4 @@
-package sellyourunhappiness.util.config;
+package sellyourunhappiness.global.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.task.TaskExecutor;
