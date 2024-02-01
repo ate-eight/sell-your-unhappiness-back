@@ -23,7 +23,7 @@ import sellyourunhappiness.core.user.domain.enums.UserStatus;
 public class User {
 	@Id
 	@Column(name = "user_id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
 	private String email;
@@ -35,19 +35,19 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	private UserStatus status;
 	private String refreshToken;
+
 	@Builder
-	public User(String name, String email, String profileURL, Role role,UserStatus status, SocialType socialType){
-		this.name=name;
-		this.email=email;
-		this.profileURL=profileURL;
-		this.role=role;
-		this.status=status;
-		this.socialType=socialType;
+	public User(String name, String email, String profileURL, Role role, UserStatus status, SocialType socialType) {
+		this.name = name;
+		this.email = email;
+		this.profileURL = profileURL;
+		this.role = role;
+		this.status = status;
+		this.socialType = socialType;
 	}
 
-	public User updateRefreshToken(String refreshToken) {
+	public void updateRefreshToken(String refreshToken) {
 		this.refreshToken = refreshToken;
-		return this;
 	}
 
 }

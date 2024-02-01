@@ -22,6 +22,7 @@ import sellyourunhappiness.api.member.dto.MemberResisterParam;
 import sellyourunhappiness.api.user.controller.UserController;
 import sellyourunhappiness.core.member.domain.Member;
 import sellyourunhappiness.core.member.domain.enums.MemberType;
+import sellyourunhappiness.global.config.JwtTokenFilter;
 import sellyourunhappiness.global.config.SecurityConfig;
 import sellyourunhappiness.global.exception.ErrorDetectAdvisor;
 
@@ -36,7 +37,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @MockBean(JpaMetamodelMappingContext.class)
-@WebMvcTest(value = MemberController.class,excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE,classes = ErrorDetectAdvisor.class))
+@WebMvcTest(value = MemberController.class, excludeFilters = {
+    @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {ErrorDetectAdvisor.class, JwtTokenFilter.class})
+})
 @AutoConfigureRestDocs
 class MemberControllerTest {
 

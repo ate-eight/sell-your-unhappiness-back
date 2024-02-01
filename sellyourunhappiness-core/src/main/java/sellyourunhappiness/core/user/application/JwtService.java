@@ -2,16 +2,11 @@ package sellyourunhappiness.core.user.application;
 
 import java.util.Date;
 import java.util.Map;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -89,7 +84,6 @@ public class JwtService {
 		log.info("Access Token, Refresh Token 헤더 설정 완료");
 	}
 
-
 	/**
 	 * AccessToken 헤더 설정
 	 */
@@ -115,10 +109,11 @@ public class JwtService {
 					user.updateRefreshToken(refreshToken);
 					userRepository.save(user);
 				},
-				() -> { throw new RuntimeException("일치하는 회원이 없습니다."); }
+				() -> {
+					throw new RuntimeException("일치하는 회원이 없습니다.");
+				}
 			);
 	}
-
 
 	public boolean isTokenValid(String token) {
 		try {
@@ -129,7 +124,6 @@ public class JwtService {
 			return false;
 		}
 	}
-
 
 	/**
 	 * RefreshToken 유효성 검사 및 새 AccessToken 발급
@@ -156,7 +150,6 @@ public class JwtService {
 		}
 	}
 
-
 	/**
 	 * AccessToken 유효성 검사 및 새 AccessToken 발급
 	 */
@@ -169,6 +162,5 @@ public class JwtService {
 			return true;
 		}
 	}
-
 
 }

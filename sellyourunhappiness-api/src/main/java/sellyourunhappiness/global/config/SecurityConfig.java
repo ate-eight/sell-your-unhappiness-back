@@ -10,15 +10,14 @@ import org.springframework.security.web.SecurityFilterChain;
 import lombok.RequiredArgsConstructor;
 import sellyourunhappiness.core.security.handler.CustomOAuth2LoginFailureHandler;
 import sellyourunhappiness.core.security.handler.CustomOAuth2LoginSuccessHandler;
-import sellyourunhappiness.core.user.application.CustomOAuth2UserService;
-import sellyourunhappiness.core.user.domain.enums.Role;
+import sellyourunhappiness.core.user.application.UserService;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-	private final CustomOAuth2UserService customOAuth2UserService;
+	private final UserService customOAuth2UserService;
 	private final CustomOAuth2LoginSuccessHandler customOAuth2LoginSuccessHandler;
 	private final CustomOAuth2LoginFailureHandler customOAuth2LoginFailureHandler;
 
