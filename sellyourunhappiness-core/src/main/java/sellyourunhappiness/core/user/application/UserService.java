@@ -25,8 +25,8 @@ public class UserService {
 			.name(name)
 			.email(email)
 			.profileURL(profileUrl)
-			.role(Role.GUEST) // 예시로 GUEST를 사용했습니다. 실제로는 적절한 롤을 설정해야 합니다.
-			.status(UserStatus.ACTIVE) // 예시로 ACTIVE를 사용했습니다. 실제 상황에 맞게 조정 필요.
+			.role(Role.GUEST)
+			.status(UserStatus.ACTIVE)
 			.socialType(socialType)
 			.build();
 		return userRepository.save(createdUser);
