@@ -1,9 +1,7 @@
 package sellyourunhappiness.api.user.controller;
 import java.util.Map;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 import sellyourunhappiness.api.user.application.UserBroker;
 import sellyourunhappiness.api.user.dto.UserInfo;
-import sellyourunhappiness.core.security.CustomOAuth2User;
+import sellyourunhappiness.global.config.security.oauth.CustomOAuth2User;
 import sellyourunhappiness.core.user.domain.User;
 import sellyourunhappiness.global.response.BaseResponse;
 

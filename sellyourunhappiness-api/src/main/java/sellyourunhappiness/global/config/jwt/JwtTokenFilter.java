@@ -1,8 +1,7 @@
-package sellyourunhappiness.global.config;
+package sellyourunhappiness.global.config.jwt;
 
 import java.io.IOException;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -12,16 +11,18 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import sellyourunhappiness.core.user.application.JwtService;
 
+@RequiredArgsConstructor
 @Component
 public class JwtTokenFilter extends OncePerRequestFilter {
 
-	@Autowired
-	private JwtService jwtService;
+	private final JwtService jwtService;
 
 	@Override
-	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+		FilterChain filterChain) throws
 		ServletException,
 		IOException {
 		String token = request.getHeader("Authorization");
@@ -30,11 +31,11 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 			try {
 				token = token.substring(7);
 				if (jwtService.isTokenExpired(token)) {
-					response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Access Token Expired");
+					response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "액세스토큰이 만료되었습니다.");
 					return;
 				}
 			} catch (TokenExpiredException ex) {
-				response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Access Token Expired");
+				response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "액세스토큰이 만료되었습니다.");
 				return;
 			}
 		}

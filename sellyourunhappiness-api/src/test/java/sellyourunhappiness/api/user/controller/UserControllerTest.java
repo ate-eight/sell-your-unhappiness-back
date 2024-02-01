@@ -34,12 +34,12 @@
 // import com.epages.restdocs.apispec.Schema;
 //
 // import sellyourunhappiness.api.user.application.UserBroker;
-// import sellyourunhappiness.core.security.CustomOAuth2User;
+// import sellyourunhappiness.global.config.security.oauth.CustomOAuth2User;
 // import sellyourunhappiness.core.user.domain.User;
 // import sellyourunhappiness.core.user.domain.enums.Role;
 // import sellyourunhappiness.core.user.domain.enums.SocialType;
 // import sellyourunhappiness.core.user.domain.enums.UserStatus;
-// import sellyourunhappiness.global.config.JwtTokenFilter;
+// import sellyourunhappiness.global.config.jwt.JwtTokenFilter;
 // import sellyourunhappiness.global.exception.ErrorDetectAdvisor;
 //
 //
@@ -180,7 +180,7 @@ import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
 
 import sellyourunhappiness.api.user.application.UserBroker;
-import sellyourunhappiness.core.security.CustomOAuth2User;
+import sellyourunhappiness.global.config.security.oauth.CustomOAuth2User;
 import sellyourunhappiness.core.user.application.JwtService;
 import sellyourunhappiness.core.user.domain.User;
 import sellyourunhappiness.core.user.domain.enums.Role;

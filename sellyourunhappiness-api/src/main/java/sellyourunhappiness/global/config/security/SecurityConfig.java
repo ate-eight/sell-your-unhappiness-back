@@ -1,4 +1,4 @@
-package sellyourunhappiness.global.config;
+package sellyourunhappiness.global.config.security;
 
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -8,16 +8,16 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.web.SecurityFilterChain;
 
 import lombok.RequiredArgsConstructor;
-import sellyourunhappiness.core.security.handler.CustomOAuth2LoginFailureHandler;
-import sellyourunhappiness.core.security.handler.CustomOAuth2LoginSuccessHandler;
-import sellyourunhappiness.core.user.application.UserService;
+import sellyourunhappiness.global.config.security.dto.CustomOAuth2UserService;
+import sellyourunhappiness.global.config.security.handler.CustomOAuth2LoginFailureHandler;
+import sellyourunhappiness.global.config.security.handler.CustomOAuth2LoginSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-	private final UserService customOAuth2UserService;
+	private final CustomOAuth2UserService customOAuth2UserService;
 	private final CustomOAuth2LoginSuccessHandler customOAuth2LoginSuccessHandler;
 	private final CustomOAuth2LoginFailureHandler customOAuth2LoginFailureHandler;
 

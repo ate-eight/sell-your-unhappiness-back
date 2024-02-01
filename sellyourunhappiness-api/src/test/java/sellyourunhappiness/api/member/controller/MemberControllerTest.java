@@ -19,11 +19,9 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import sellyourunhappiness.api.member.application.MemberBroker;
 import sellyourunhappiness.api.member.dto.MemberResisterParam;
-import sellyourunhappiness.api.user.controller.UserController;
 import sellyourunhappiness.core.member.domain.Member;
 import sellyourunhappiness.core.member.domain.enums.MemberType;
-import sellyourunhappiness.global.config.JwtTokenFilter;
-import sellyourunhappiness.global.config.SecurityConfig;
+import sellyourunhappiness.global.config.jwt.JwtTokenFilter;
 import sellyourunhappiness.global.exception.ErrorDetectAdvisor;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;

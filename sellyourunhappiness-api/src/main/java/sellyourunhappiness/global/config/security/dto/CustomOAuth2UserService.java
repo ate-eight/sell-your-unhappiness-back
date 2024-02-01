@@ -1,4 +1,4 @@
-package sellyourunhappiness.global.dto;
+package sellyourunhappiness.global.config.security.dto;
 
 import static sellyourunhappiness.core.user.domain.enums.SocialType.*;
 
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import sellyourunhappiness.api.user.application.UserBroker;
-import sellyourunhappiness.core.security.CustomOAuth2User;
+import sellyourunhappiness.global.config.security.oauth.CustomOAuth2User;
 import sellyourunhappiness.core.user.application.OAuthAttributes;
 import sellyourunhappiness.core.user.domain.User;
 import sellyourunhappiness.core.user.domain.enums.SocialType;

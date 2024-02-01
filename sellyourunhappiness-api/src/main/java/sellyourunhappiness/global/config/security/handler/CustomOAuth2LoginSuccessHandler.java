@@ -1,4 +1,4 @@
-package sellyourunhappiness.core.security.handler;
+package sellyourunhappiness.global.config.security.handler;
 
 import java.io.IOException;
 
@@ -11,20 +11,21 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import sellyourunhappiness.core.security.CustomOAuth2User;
+import sellyourunhappiness.global.config.security.oauth.CustomOAuth2User;
 import sellyourunhappiness.core.user.application.JwtService;
 
-@Service
 @Slf4j
 @RequiredArgsConstructor
+@Service
 public class CustomOAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 
 	private final JwtService jwtService;
+
 	@Override
-	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
-		log.info("OAuth2 Login 성공!");
+	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+		Authentication authentication) throws ServletException, IOException {
 		try {
-			CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
+			CustomOAuth2User oAuth2User = (CustomOAuth2User)authentication.getPrincipal();
 
 			loginSuccess(response, oAuth2User);
 		} catch (Exception e) {
