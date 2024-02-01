@@ -22,16 +22,6 @@ public class UserController {
 
 	private final UserBroker userBroker;
 
-	@GetMapping("/login")
-	public String getLoginPage() {
-		return "login";
-	}
-
-	@GetMapping("/")
-	public String main() {
-		return "main";
-	}
-
 	@GetMapping("/v1/user/info")
 	public BaseResponse<UserInfo> getUserInfo(@AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
 		String email = customOAuth2User.getEmail();
