@@ -11,8 +11,9 @@ import sellyourunhappiness.core.user.domain.enums.SocialType;
 import sellyourunhappiness.core.user.domain.enums.UserStatus;
 import sellyourunhappiness.core.user.infrastructure.UserRepository;
 
-@Service
+
 @RequiredArgsConstructor
+@Service
 public class UserService {
 	private final UserRepository userRepository;
 
@@ -25,7 +26,7 @@ public class UserService {
 			.name(name)
 			.email(email)
 			.profileURL(profileUrl)
-			.role(Role.GUEST)
+			.role(Role.USER)
 			.status(UserStatus.ACTIVE)
 			.socialType(socialType)
 			.build();

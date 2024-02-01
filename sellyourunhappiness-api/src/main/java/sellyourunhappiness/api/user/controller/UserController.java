@@ -12,12 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 import sellyourunhappiness.api.user.application.UserBroker;
 import sellyourunhappiness.api.user.dto.UserInfo;
-import sellyourunhappiness.global.config.security.oauth2.CustomOAuth2User;
 import sellyourunhappiness.core.user.domain.User;
+import sellyourunhappiness.global.config.security.oauth2.CustomOAuth2User;
 import sellyourunhappiness.global.response.BaseResponse;
 
-@RestController
+
 @RequiredArgsConstructor
+@RestController
 public class UserController {
 
 	private final UserBroker userBroker;
@@ -32,7 +33,7 @@ public class UserController {
 	}
 
 	@PostMapping("/v1/user/refresh")
-	public BaseResponse<Map<String, String>> refreshAccessToken(@RequestHeader("Refresh-Token") String refreshToken) {
+	public BaseResponse<Map<String, String>> refreshAccessToken(@RequestHeader("Authorization") String refreshToken) {
 		try {
 			Map<String, String> tokens = userBroker.refreshAccessToken(refreshToken);
 			return new BaseResponse<>(tokens, HttpStatus.OK, "토큰 갱신 성공");
