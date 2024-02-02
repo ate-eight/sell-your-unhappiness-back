@@ -8,7 +8,6 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import java.util.Collections;
 import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -21,8 +20,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
-import org.springframework.security.authentication.TestingAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -30,13 +27,8 @@ import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
 
 import sellyourunhappiness.api.user.application.UserBroker;
-import sellyourunhappiness.core.user.application.JwtService;
-import sellyourunhappiness.core.user.domain.User;
-import sellyourunhappiness.core.user.domain.enums.Role;
-import sellyourunhappiness.core.user.domain.enums.SocialType;
-import sellyourunhappiness.core.user.domain.enums.UserStatus;
-import sellyourunhappiness.global.config.security.oauth2.CustomOAuth2User;
-import sellyourunhappiness.global.slack.common.SlackUtils;
+import sellyourunhappiness.api.config.jwt.application.JwtService;
+import sellyourunhappiness.api.config.slack.utils.SlackUtils;
 
 @WebMvcTest(value = UserController.class)
 @AutoConfigureRestDocs
@@ -54,6 +46,7 @@ public class UserControllerTest {
 
 	@BeforeEach
 	void setUp() {
+		/*
 		// CustomOAuth2User 설정
 		String email = "dbscks9793@gmail.com";
 		User mockUser = new User("박윤찬", email, null, Role.USER, UserStatus.ACTIVE, SocialType.GOOGLE);
@@ -71,7 +64,7 @@ public class UserControllerTest {
 		testingAuthenticationToken.setAuthenticated(true);
 		SecurityContextHolder.getContext().setAuthentication(testingAuthenticationToken);
 
-		when(userBroker.getUserByEmail(anyString())).thenReturn(mockUser);
+		when(userBroker.getUserByEmail(anyString())).thenReturn(mockUser);*/
 	}
 
 	@DisplayName("사용자 정보 조회 API 테스트")

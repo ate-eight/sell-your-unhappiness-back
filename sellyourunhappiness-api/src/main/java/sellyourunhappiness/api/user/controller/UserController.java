@@ -4,17 +4,13 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import lombok.RequiredArgsConstructor;
 import sellyourunhappiness.api.user.application.UserBroker;
-import sellyourunhappiness.api.user.dto.UserInfo;
-import sellyourunhappiness.global.config.security.oauth2.CustomOAuth2User;
-import sellyourunhappiness.core.user.domain.User;
-import sellyourunhappiness.global.response.BaseResponse;
+import sellyourunhappiness.api.user.dto.UserResponse;
+import sellyourunhappiness.api.config.security.oauth2.CustomOAuth2User;
+import sellyourunhappiness.api.config.response.BaseResponse;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,16 +18,13 @@ public class UserController {
 
 	private final UserBroker userBroker;
 
-	@GetMapping("/v1/user/info")
-	public BaseResponse<UserInfo> getUserInfo(@AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
-		String email = customOAuth2User.getEmail();
-		User user = userBroker.getUserByEmail(email);
-
-		UserInfo userInfo = new UserInfo(user.getName(), user.getEmail());
-		return new BaseResponse<>(userInfo, HttpStatus.OK, "유저 조회 성공");
+	@GetMapping("/v1/user")
+	public BaseResponse<UserResponse> getUserInfo(@AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
+		UserResponse response = userBroker.getUserByEmail(customOAuth2User.getEmail());
+		return new BaseResponse<>(response, HttpStatus.OK, "유저 조회 성공");
 	}
 
-	@PostMapping("/v1/user/refresh")
+	@PatchMapping("/v1/user/token-refresh")
 	public BaseResponse<Map<String, String>> refreshAccessToken(@RequestHeader("Refresh-Token") String refreshToken) {
 		try {
 			Map<String, String> tokens = userBroker.refreshAccessToken(refreshToken);

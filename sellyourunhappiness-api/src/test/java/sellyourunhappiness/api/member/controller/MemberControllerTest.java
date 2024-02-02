@@ -21,8 +21,8 @@ import sellyourunhappiness.api.member.application.MemberBroker;
 import sellyourunhappiness.api.member.dto.MemberResisterParam;
 import sellyourunhappiness.core.member.domain.Member;
 import sellyourunhappiness.core.member.domain.enums.MemberType;
-import sellyourunhappiness.global.config.jwt.JwtTokenFilter;
-import sellyourunhappiness.global.slack.exception.ErrorDetectAdvisor;
+import sellyourunhappiness.api.config.jwt.filter.JwtTokenFilter;
+import sellyourunhappiness.api.config.exception.ErrorDetectAdvisor;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;

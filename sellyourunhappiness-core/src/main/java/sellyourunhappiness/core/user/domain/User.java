@@ -46,6 +46,17 @@ public class User {
 		this.socialType = socialType;
 	}
 
+	public static User create(String name, String email, String profileUrl, SocialType socialType) {
+		return User.builder()
+				.name(name)
+				.email(email)
+				.profileURL(profileUrl)
+				.role(Role.GUEST)
+				.status(UserStatus.ACTIVE)
+				.socialType(socialType)
+				.build();
+	}
+
 	public void updateRefreshToken(String refreshToken) {
 		this.refreshToken = refreshToken;
 	}
