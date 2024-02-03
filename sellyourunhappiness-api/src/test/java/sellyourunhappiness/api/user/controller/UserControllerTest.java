@@ -29,14 +29,15 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
 
+import sellyourunhappiness.api.config.jwt.application.JwtService;
+import sellyourunhappiness.api.config.security.oauth2.CustomOAuth2User;
+import sellyourunhappiness.api.config.slack.component.SlackComponent;
 import sellyourunhappiness.api.user.application.UserBroker;
-import sellyourunhappiness.core.user.application.JwtService;
+import sellyourunhappiness.api.user.dto.UserResponse;
 import sellyourunhappiness.core.user.domain.User;
 import sellyourunhappiness.core.user.domain.enums.Role;
 import sellyourunhappiness.core.user.domain.enums.SocialType;
 import sellyourunhappiness.core.user.domain.enums.UserStatus;
-import sellyourunhappiness.global.config.security.oauth2.CustomOAuth2User;
-import sellyourunhappiness.global.slack.common.SlackUtils;
 
 @WebMvcTest(value = UserController.class)
 @AutoConfigureRestDocs
@@ -50,13 +51,14 @@ public class UserControllerTest {
 	@MockBean
 	private JwtService jwtService;
 	@MockBean
-	private SlackUtils slackUtils;
+	private SlackComponent slackComponent;
 
 	@BeforeEach
 	void setUp() {
 		// CustomOAuth2User 설정
 		String email = "dbscks9793@gmail.com";
 		User mockUser = new User("박윤찬", email, null, Role.USER, UserStatus.ACTIVE, SocialType.GOOGLE);
+		UserResponse mockUserResponse = new UserResponse(mockUser.getName(), mockUser.getEmail());
 
 		CustomOAuth2User customOAuth2User = new CustomOAuth2User(
 			Collections.singleton(new SimpleGrantedAuthority(mockUser.getRole().getKey())),
@@ -71,14 +73,14 @@ public class UserControllerTest {
 		testingAuthenticationToken.setAuthenticated(true);
 		SecurityContextHolder.getContext().setAuthentication(testingAuthenticationToken);
 
-		when(userBroker.getUserByEmail(anyString())).thenReturn(mockUser);
+		when(userBroker.getUserByEmail(anyString())).thenReturn(mockUserResponse);
 	}
 
 	@DisplayName("사용자 정보 조회 API 테스트")
 	@Test
 	public void shouldGetUserInfo() throws Exception {
 		// When & Then
-		mockMvc.perform(RestDocumentationRequestBuilders.get("/v1/user/info")
+		mockMvc.perform(RestDocumentationRequestBuilders.get("/v1/user")
 				.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
 			.andExpect(jsonPath("$.data.email").value("dbscks9793@gmail.com"))
@@ -108,11 +110,10 @@ public class UserControllerTest {
 		// Given
 		String refreshToken = "mockRefreshToken";
 		String newAccessToken = "newMockAccessToken";
-		Map<String, String> tokens = Map.of("accessToken", newAccessToken);
-		when(userBroker.refreshAccessToken(refreshToken)).thenReturn(tokens);
+		when(userBroker.refreshAccessToken(refreshToken)).thenReturn(Map.of("accessToken", "newMockAccessToken"));
 
 		// When & Then
-		mockMvc.perform(RestDocumentationRequestBuilders.post("/v1/user/refresh")
+		mockMvc.perform(RestDocumentationRequestBuilders.post("/v1/user/token-refresh")
 				.with(csrf())
 				.header("Refresh-Token", refreshToken)
 				.accept(MediaType.APPLICATION_JSON))

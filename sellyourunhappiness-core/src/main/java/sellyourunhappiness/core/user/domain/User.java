@@ -26,6 +26,7 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
+	@Column(name = "email", unique = true)
 	private String email;
 	private String profileURL;
 	@Enumerated(EnumType.STRING)
@@ -46,8 +47,18 @@ public class User {
 		this.socialType = socialType;
 	}
 
+	public static User create(String name, String email, String profileUrl, SocialType socialType) {
+		return User.builder()
+			.name(name)
+			.email(email)
+			.profileURL(profileUrl)
+			.role(Role.USER)
+			.status(UserStatus.ACTIVE)
+			.socialType(socialType)
+			.build();
+	}
+
 	public void updateRefreshToken(String refreshToken) {
 		this.refreshToken = refreshToken;
 	}
-
 }
