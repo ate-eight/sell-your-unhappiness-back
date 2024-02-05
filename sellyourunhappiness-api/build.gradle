@@ -9,6 +9,7 @@ swaggerSources {
     }
 }
 
+
 openapi3 {
     setServer("http://localhost:8080")// 서버 주소 설정, API 요청 보내기 기능 주소
     title = "restdocs-swagger API Documentation" // API 문서 제목
@@ -18,7 +19,6 @@ openapi3 {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'net.gpedro.integrations.slack:slack-webhook:1.4.0'
     implementation 'org.aspectj:aspectjweaver:1.9.19'
@@ -27,8 +27,7 @@ dependencies {
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
     testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.17.1'
     swaggerUI 'org.webjars:swagger-ui:4.11.1'
-    implementation 'net.gpedro.integrations.slack:slack-webhook:1.4.0'
-    implementation 'org.aspectj:aspectjweaver:1.9.19'
+
 
 
     // Spring REST Docs + Swagger 의존성 추가

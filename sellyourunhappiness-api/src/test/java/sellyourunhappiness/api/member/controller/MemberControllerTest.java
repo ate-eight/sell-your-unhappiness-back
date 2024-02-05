@@ -9,15 +9,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import sellyourunhappiness.api.member.application.MemberBroker;
 import sellyourunhappiness.api.member.dto.MemberResisterParam;
 import sellyourunhappiness.core.member.domain.Member;
 import sellyourunhappiness.core.member.domain.enums.MemberType;
+import sellyourunhappiness.api.config.filter.JwtTokenFilter;
+import sellyourunhappiness.api.config.exception.ErrorDetectAdvisor;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
 import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
 import static org.mockito.ArgumentMatchers.any;
@@ -26,7 +33,11 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(MemberController.class)
+
+@MockBean(JpaMetamodelMappingContext.class)
+@WebMvcTest(value = MemberController.class, excludeFilters = {
+    @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {ErrorDetectAdvisor.class, JwtTokenFilter.class})
+})
 @AutoConfigureRestDocs
 class MemberControllerTest {
 
@@ -39,8 +50,10 @@ class MemberControllerTest {
     @MockBean
     private MemberBroker memberBroker;
 
+
     @DisplayName("테스트 API")
     @Test
+    @WithMockUser
     void save() throws Exception {
         // given
         String name = "민규";
@@ -57,6 +70,7 @@ class MemberControllerTest {
                                 .content(objectMapper.writeValueAsString(param))
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
+                                .with(csrf())
                 )
                 .andExpect(status().isOk())
                 .andDo(

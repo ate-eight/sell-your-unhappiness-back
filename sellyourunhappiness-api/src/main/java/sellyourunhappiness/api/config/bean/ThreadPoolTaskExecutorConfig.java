@@ -1,9 +1,11 @@
-package sellyourunhappiness.util.config;
+package sellyourunhappiness.api.config.bean;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
+@Configuration
 public class ThreadPoolTaskExecutorConfig {
 	@Bean
 	public TaskExecutor threadPoolTaskExecutor() {
