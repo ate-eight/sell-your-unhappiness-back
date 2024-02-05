@@ -32,7 +32,6 @@ public class SlackNotificationAspect {
 			.fields(SlackFieldsUtils.createNotificationFields(proceedingJoinPoint))
 			.build();
 
-
 		SlackMessageModel slackMessageModel = SlackMessageModel.builder()
 			.messageText("Post Request")
 			.icon(":floppy_disk:")
