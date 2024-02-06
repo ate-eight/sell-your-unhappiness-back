@@ -9,12 +9,17 @@ import sellyourunhappiness.api.board.dto.BoardSearchCondition;
 import sellyourunhappiness.api.board.dto.BoardSearchResponse;
 import sellyourunhappiness.api.config.page.PageResponse;
 import sellyourunhappiness.api.config.enums.EnumBean;
+import sellyourunhappiness.api.config.response.annotation.ApiResponseAnnotation;
+import sellyourunhappiness.api.config.response.aspect.dto.ApiResponse;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import static sellyourunhappiness.api.config.response.aspect.dto.ApiResponse.*;
+
+@ApiResponseAnnotation
 @RequestMapping("/v1")
 @RestController
 @RequiredArgsConstructor
@@ -24,31 +29,31 @@ public class BoardController {
     private final EnumBean enumBean;
 
     @PostMapping("/board")
-    public Map<String, String> register(@RequestBody BoardRegisterParam param) {
+    public ApiResponse register(@RequestBody BoardRegisterParam param) {
         Map<String, String> map = new HashMap<>();
 
-        map.put("code", boardBroker.save(param));
+        map.put("message", boardBroker.save(param));
 
-        return map;
+        return create(map);
     }
 
     @GetMapping("/board/{id}")
-    public BoardResponse getBoardById(@PathVariable("id") Long id) {
-        return boardBroker.findById(id);
+    public ApiResponse getBoardById(@PathVariable("id") Long id) {
+        return create(boardBroker.findById(id));
     }
 
     @GetMapping("/boards")
-    public PageResponse<BoardSearchResponse> searchBoards(BoardSearchCondition condition){
-        return boardBroker.findByTypeAndStatusAllDesc(condition);
+    public ApiResponse searchBoards(BoardSearchCondition condition){
+        return create(boardBroker.findByTypeAndStatusAllDesc(condition));
     }
 
     @GetMapping("/board/types")
-    public Map<String, List<String>> getBoardTypes() {
+    public ApiResponse getBoardTypes() {
         Map<String, List<String>> map = new LinkedHashMap<>();
 
         map.put("types", enumBean.get("BoardType"));
 
-        return map;
+        return create(map);
     }
 }
 

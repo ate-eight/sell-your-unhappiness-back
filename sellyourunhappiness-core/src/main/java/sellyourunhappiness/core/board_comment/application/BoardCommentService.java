@@ -8,6 +8,8 @@ import sellyourunhappiness.core.board_comment.infrastructure.BoardCommentReposit
 
 import java.util.List;
 
+import static sellyourunhappiness.core.board_comment.domain.BoardComment.create;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -17,7 +19,12 @@ public class BoardCommentService {
 
     @Transactional
     public BoardComment save(Long parentId, Long boardId, String content) {
-        BoardComment boardComment = BoardComment.create(parentId, boardId, content);
+        if (parentId != null) {
+            boardCommentRepository.findByParentIdAndBoardId(parentId, boardId)
+                    .orElseThrow(() -> new IllegalArgumentException("상위 댓글이 존재하지 않습니다."));
+        }
+
+        BoardComment boardComment = create(parentId, boardId, content);
         return boardCommentRepository.save(boardComment);
     }
 

@@ -28,17 +28,22 @@ public class BoardComment {
     private LocalDateTime createTime = LocalDateTime.now();
 
     public BoardComment(Long parentId, Long boardId, String content) {
-        this.parentId = parentId;
+        this.parentId = orElseZero(parentId);
         this.boardId = boardId;
         this.content = content;
     }
 
     public static BoardComment create(Long parentId, Long boardId, String content) {
+
         return new BoardComment(parentId, boardId, content);
     }
 
     public void update(String content) {
         this.content = content;
+    }
+
+    private Long orElseZero(Long parentId) {
+        return (parentId == null) ? 0L : parentId;
     }
 }
 

@@ -83,7 +83,12 @@ class BoardControllerTest {
                                                 fieldWithPath("title").type(JsonFieldType.STRING).description("게시글 제목"),
                                                 fieldWithPath("content").type(JsonFieldType.STRING).description("게시글 내용"))
                                         .responseFields(
-                                                fieldWithPath("code").type(JsonFieldType.STRING).description("성공 또는 실패"))
+                                                fieldWithPath("common").type(JsonFieldType.OBJECT),
+                                                fieldWithPath("code").type(JsonFieldType.STRING).description("HTTP 상태"),
+                                                fieldWithPath("message").type(JsonFieldType.STRING).description("에러 메시지"),
+                                                fieldWithPath("success").type(JsonFieldType.STRING).description("성공 여부"),
+                                                fieldWithPath("data").type(JsonFieldType.STRING),
+                                                fieldWithPath("data.message").type(JsonFieldType.STRING).description("성공 또는 실패"))
                                         .requestSchema(null)
                                         .responseSchema(null)
                                         .build())));
