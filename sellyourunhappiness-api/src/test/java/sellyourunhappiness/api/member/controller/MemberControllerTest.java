@@ -89,8 +89,8 @@ class MemberControllerTest {
                                                 fieldWithPath("name").type(JsonFieldType.STRING).description("이름"),
                                                 fieldWithPath("nickname").type(JsonFieldType.STRING).description("닉네임"),
                                                 fieldWithPath("grade").type(JsonFieldType.STRING).description("학년"))
-                                        .requestSchema(Schema.schema("테스트 API Request"))
-                                        .responseSchema(Schema.schema("테스트 API Response"))
+                                        .requestSchema(null)
+                                        .responseSchema(null)
                                         .build())));
     }
 }
