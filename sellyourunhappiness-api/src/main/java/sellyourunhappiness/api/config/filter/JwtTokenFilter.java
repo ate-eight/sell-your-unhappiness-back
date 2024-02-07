@@ -5,8 +5,6 @@ import java.io.IOException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.auth0.jwt.exceptions.TokenExpiredException;
-
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,13 +22,8 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 		String token = request.getHeader("Authorization");
 
 		if (token != null && token.startsWith("Bearer ")) {
-			try {
-				token = token.substring(7);
-				if (jwtService.isTokenExpired(token)) {
-					response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "액세스토큰이 만료되었습니다.");
-					return;
-				}
-			} catch (TokenExpiredException ex) {
+			token = token.substring(7);
+			if (jwtService.isTokenExpired(token)) {
 				response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "액세스토큰이 만료되었습니다.");
 				return;
 			}
