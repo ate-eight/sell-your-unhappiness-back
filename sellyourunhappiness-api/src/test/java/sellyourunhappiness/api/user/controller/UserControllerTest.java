@@ -39,7 +39,7 @@ import sellyourunhappiness.core.user.domain.enums.Role;
 import sellyourunhappiness.core.user.domain.enums.SocialType;
 import sellyourunhappiness.core.user.domain.enums.UserStatus;
 
-@WebMvcTest(value = UserController.class)
+@WebMvcTest(UserController.class)
 @AutoConfigureRestDocs
 public class UserControllerTest {
 	@Autowired
