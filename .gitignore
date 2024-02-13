@@ -23,7 +23,11 @@ bin/
 *.iml
 *.ipr
 *.yml
+<<<<<<< HEAD
 **/*.log
+=======
+
+>>>>>>> dev
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/

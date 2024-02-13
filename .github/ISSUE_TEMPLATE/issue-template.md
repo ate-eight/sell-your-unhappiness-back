@@ -5,6 +5,7 @@ title: "[Feat/Fix/Refactoring] / [기능 식별자] 간단 내용 ex) [Feat/M-00
 labels: FEAT
 assignees: JuSeong1130
 
+
 ---
 
 # 내용
