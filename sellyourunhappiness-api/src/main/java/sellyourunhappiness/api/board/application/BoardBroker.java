@@ -10,7 +10,6 @@ import sellyourunhappiness.api.config.page.PageResponse;
 import sellyourunhappiness.core.board.application.BoardService;
 import sellyourunhappiness.core.board.domain.Board;
 import sellyourunhappiness.core.config.page.PageModel;
-import sellyourunhappiness.core.member.application.MemberService;
 
 import java.util.List;
 import java.util.stream.Collectors;

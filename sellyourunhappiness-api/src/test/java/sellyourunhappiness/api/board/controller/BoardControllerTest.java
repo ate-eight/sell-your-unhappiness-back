@@ -19,8 +19,10 @@ import sellyourunhappiness.api.board.dto.BoardResponse;
 import sellyourunhappiness.api.board.dto.BoardSearchCondition;
 import sellyourunhappiness.api.board.dto.BoardSearchResponse;
 import sellyourunhappiness.api.config.enums.EnumBean;
+import sellyourunhappiness.api.config.jwt.application.JwtService;
 import sellyourunhappiness.api.config.page.PageResponse;
 import sellyourunhappiness.api.config.page.PageValue;
+import sellyourunhappiness.api.config.slack.component.SlackComponent;
 import sellyourunhappiness.core.board.domain.enums.BoardType;
 
 import java.time.LocalDateTime;
@@ -54,7 +56,10 @@ class BoardControllerTest {
 
     @MockBean
     private EnumBean enumBean;
-
+    @MockBean
+    private JwtService jwtService;
+    @MockBean
+    private SlackComponent slackComponent;
     @Test
     @DisplayName("게시글 저장 API")
     void register() throws Exception {
