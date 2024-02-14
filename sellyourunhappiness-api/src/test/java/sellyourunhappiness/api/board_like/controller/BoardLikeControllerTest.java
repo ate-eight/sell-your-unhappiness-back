@@ -21,22 +21,22 @@ import org.springframework.restdocs.request.RequestDocumentation;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import sellyourunhappiness.api.board_like.application.LikeBroker;
+import sellyourunhappiness.api.board_like.application.BoardLikeBroker;
 import sellyourunhappiness.api.config.jwt.application.JwtService;
 import sellyourunhappiness.api.config.slack.component.SlackComponent;
 
 
-@WebMvcTest(LikeController.class)
+@WebMvcTest(sellyourunhappiness.api.board_like.controller.BoardLikeController.class)
 @AutoConfigureRestDocs
 @DisplayName("게시판 좋아요 CRUD API")
 @WithMockUser(username = "MockLee", roles = {"USER"}) //각자 API마다 권한이 달라지면?
-class LikeControllerTest {
+class BoardLikeControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private LikeBroker likeBroker;
+    private BoardLikeBroker likeBroker;
 
     @MockBean
     private JwtService jwtService;  //Service로 등록하냐 Component로 등록하냐 왜 이걸 빈으로 해야되냐?

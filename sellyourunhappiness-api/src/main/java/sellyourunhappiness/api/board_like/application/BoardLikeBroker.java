@@ -5,13 +5,12 @@ import org.springframework.stereotype.Service;
 import sellyourunhappiness.core.board.application.BoardService;
 import sellyourunhappiness.core.board.domain.Board;
 import sellyourunhappiness.core.board_like.application.BoardLikeService;
-import sellyourunhappiness.core.board_like.domain.enums.LikeType;
 import sellyourunhappiness.core.user.application.UserService;
 import sellyourunhappiness.core.user.domain.User;
 
 @Service
 @RequiredArgsConstructor
-public class LikeBroker {
+public class BoardLikeBroker {
 
     private final BoardLikeService boardLikeService;
     private final UserService userService;
