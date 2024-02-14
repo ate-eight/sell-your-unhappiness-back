@@ -31,12 +31,16 @@ public class SecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
 
+<<<<<<< HEAD
 			.csrf(AbstractHttpConfigurer::disable)
 
+=======
+>>>>>>> 354a831 (feat : 좋아요 기능 구현)
 			.csrf((csrfConfig) ->
 				csrfConfig.disable()
 			)
 			.httpBasic(Customizer.withDefaults())
+
 			.headers((headerConfig) ->
 				headerConfig.frameOptions(FrameOptionsConfig::disable)
 			)
@@ -44,11 +48,18 @@ public class SecurityConfig {
 			.authorizeHttpRequests((authorizeRequests) ->
 				authorizeRequests
 					//.requestMatchers(PathRequest.toH2Console()).permitAll()
+<<<<<<< HEAD
 					 // 왜 requestMatcher로 permiall을 해줬냐
 					.anyRequest().permitAll()
 			)
 
 
+=======
+					.requestMatchers("/**").permitAll() // 왜 requestMatcher로 permiall을 해줬냐
+					.anyRequest().authenticated()
+			)
+
+>>>>>>> 354a831 (feat : 좋아요 기능 구현)
 			.logout((logoutConfig) ->
 				logoutConfig.logoutSuccessUrl("/")
 			)

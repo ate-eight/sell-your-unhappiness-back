@@ -36,10 +36,17 @@ public class BoardLike {
         this.likeType = likeType;
     }
 
+<<<<<<< HEAD
     public static BoardLike create(Long boardId, Long userId, LikeType likeType) {
         return BoardLike.builder()
                 .userId(userId)
                 .boardId(boardId)
+=======
+    public static BoardLike create(User user, Board board, LikeType likeType) {
+        return BoardLike.builder()
+                .userId(user.getId())
+                .boardId(board.getId())
+>>>>>>> 354a831 (feat : 좋아요 기능 구현)
                 .likeType(likeType)
                 .build();
     }
