@@ -20,19 +20,12 @@ public class BoardLikeController {
 
     private final BoardLikeBroker boardLikeBroker;
 
-    @PostMapping("/board/{boardId}/like")
-    public ApiResponse createLike(@PathVariable("boardId") Long boardId,
-            @AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
-        boardLikeBroker.createLike(customOAuth2User.getEmail(), boardId);
-        return ApiResponse.create(new HashMap<>());
-        //이용자들 관점에서는 다르다. 좋아요를 눌렀는데 빈값만 보내주면 되면 이용자입장에서는 잘 모른다.
-    }
-
-    @PostMapping("/board/{boardId}/dislike")
-    public ApiResponse createDislike(@PathVariable("boardId") Long boardId,
-            @AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
-        boardLikeBroker.createDislike(customOAuth2User.getEmail(), boardId);
+    @PostMapping("/board/{boardId}/{type}")
+    public ApiResponse like(@PathVariable("boardId") Long boardId, @PathVariable("type") String type,
+                                  @AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
+        boardLikeBroker.like(customOAuth2User.getEmail(), boardId, type);
         return ApiResponse.create(new HashMap<>());
     }
-
 }
+
+
