@@ -27,15 +27,15 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
-			//.csrf(Customizer.withDefaults())
+			.csrf(AbstractHttpConfigurer::disable)
 			.headers((headerConfig) ->
 				headerConfig.frameOptions(FrameOptionsConfig::disable)
 			)
 			.authorizeHttpRequests((authorizeRequests) ->
 				authorizeRequests
 					//.requestMatchers(PathRequest.toH2Console()).permitAll()
-					.requestMatchers("/**").permitAll() // 왜 requestMatcher로 permiall을 해줬냐
-					.anyRequest().authenticated()
+					 // 왜 requestMatcher로 permiall을 해줬냐
+					.anyRequest().permitAll()
 			)
 
 			.logout((logoutConfig) ->

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import sellyourunhappiness.core.board.application.BoardService;
 import sellyourunhappiness.core.board.domain.Board;
 import sellyourunhappiness.core.board_like.application.BoardLikeService;
+import sellyourunhappiness.core.board_like.domain.enums.LikeType;
 import sellyourunhappiness.core.user.application.UserService;
 import sellyourunhappiness.core.user.domain.User;
 
@@ -16,19 +17,20 @@ public class BoardLikeBroker {
     private final UserService userService;
     private final BoardService boardService;
 
-    public void createLike(String email, Long boardId) {
+    public String like(String email, Long boardId, String type) {
         User user = userService.findByEmail(email);
         Board board = boardService.findById(boardId);
 
-        boardLikeService.createLike(user,board);
+        LikeType likeType = type.equals("like") ? LikeType.LIKE : LikeType.DISLIKE;
+
+        boardLikeService.findByBoardIdAndUserIdAndLikeType(board.getId(), user.getId(), likeType)
+                .ifPresent(boardLike -> {
+                    throw new IllegalArgumentException("해당 데이터가 존재합니다");
+                });
+
+        boardLikeService.save(board.getId(), user.getId(), likeType);
+        return "success";
     }
-
-    public void createDislike(String email, Long boardId) {
-        User user = userService.findByEmail(email);
-        Board board = boardService.findById(boardId);
-        boardLikeService.createDislike(user,board);
-    }
-
-
-
 }
+
+

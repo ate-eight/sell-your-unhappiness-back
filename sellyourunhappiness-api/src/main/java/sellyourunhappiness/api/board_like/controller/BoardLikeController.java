@@ -1,13 +1,20 @@
 package sellyourunhappiness.api.board_like.controller;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import sellyourunhappiness.api.board_like.application.BoardLikeBroker;
+import sellyourunhappiness.api.board_like.dto.BoardLikeParam;
+import sellyourunhappiness.api.config.enums.EnumBean;
 import sellyourunhappiness.api.config.response.annotation.ApiResponseAnnotation;
 import sellyourunhappiness.api.config.response.aspect.dto.ApiResponse;
 import sellyourunhappiness.api.config.security.oauth2.CustomOAuth2User;
@@ -19,20 +26,31 @@ import sellyourunhappiness.api.config.security.oauth2.CustomOAuth2User;
 public class BoardLikeController {
 
     private final BoardLikeBroker boardLikeBroker;
-
-    @PostMapping("/board/{boardId}/like")
-    public ApiResponse createLike(@PathVariable("boardId") Long boardId,
+    private final EnumBean enumBean;
+    @PostMapping("/board/{boardId}/{type}")
+    public ApiResponse like(@PathVariable("boardId") Long boardId, @PathVariable("type") String type,
             @AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
-        boardLikeBroker.createLike(customOAuth2User.getEmail(), boardId);
-        return ApiResponse.create(new HashMap<>());
-        //이용자들 관점에서는 다르다. 좋아요를 눌렀는데 빈값만 보내주면 되면 이용자입장에서는 잘 모른다.
+        Map<String, String> map = new HashMap<>();
+
+        map.put("message", boardLikeBroker.like(customOAuth2User.getEmail(), boardId, type));
+
+        return ApiResponse.create(map);
     }
 
-    @PostMapping("/board/{boardId}/dislike")
-    public ApiResponse createDislike(@PathVariable("boardId") Long boardId,
-            @AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
-        boardLikeBroker.createDislike(customOAuth2User.getEmail(), boardId);
-        return ApiResponse.create(new HashMap<>());
+    @PostMapping("/test")
+    public void test(@RequestBody BoardLikeParam boardLikeParam) {
+        System.out.println();
     }
 
+
+    @GetMapping("/like/types")
+    public ApiResponse getLikeTypes() {
+        Map<String, List<String>> map = new LinkedHashMap<>();
+
+        map.put("types", enumBean.get("LikeType"));
+
+        return ApiResponse.create(map);
+    }
 }
+
+

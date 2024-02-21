@@ -36,10 +36,10 @@ public class BoardLike {
         this.likeType = likeType;
     }
 
-    public static BoardLike create(User user, Board board, LikeType likeType) {
+    public static BoardLike create(Long boardId, Long userId, LikeType likeType) {
         return BoardLike.builder()
-                .userId(user.getId())
-                .boardId(board.getId())
+                .userId(userId)
+                .boardId(boardId)
                 .likeType(likeType)
                 .build();
     }
