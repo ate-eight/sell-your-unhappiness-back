@@ -37,6 +37,7 @@ public class BoardLike {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     public static BoardLike create(Long boardId, Long userId, LikeType likeType) {
         return BoardLike.builder()
                 .userId(userId)
@@ -47,6 +48,12 @@ public class BoardLike {
                 .userId(user.getId())
                 .boardId(board.getId())
 >>>>>>> 354a831 (feat : 좋아요 기능 구현)
+=======
+    public static BoardLike create(Long boardId, Long userId, LikeType likeType) {
+        return BoardLike.builder()
+                .userId(userId)
+                .boardId(boardId)
+>>>>>>> e201dad (bug : AOP로 인해 common이 null로 되는 현상)
                 .likeType(likeType)
                 .build();
     }

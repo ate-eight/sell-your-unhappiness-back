@@ -10,10 +10,15 @@ import sellyourunhappiness.core.board_like.infrastructure.BoardLikeRepository;
 import sellyourunhappiness.core.user.domain.User;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import java.util.Optional;
 
 =======
 >>>>>>> 354a831 (feat : 좋아요 기능 구현)
+=======
+import java.util.Optional;
+
+>>>>>>> e201dad (bug : AOP로 인해 common이 null로 되는 현상)
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -21,6 +26,7 @@ public class BoardLikeService {
 
     private final BoardLikeRepository boardLikeRepository;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     public void save(Long boardId, Long userId, LikeType type) {
         boardLikeRepository.save(BoardLike.create(userId, boardId, type));
@@ -42,16 +48,18 @@ public class BoardLikeService {
 
         boardLikeRepository.save(BoardLike.create(user, board, LikeType.LIKE));
 
+=======
+    public void save(Long boardId, Long userId, LikeType type) {
+        boardLikeRepository.save(BoardLike.create(userId, boardId, type));
+>>>>>>> e201dad (bug : AOP로 인해 common이 null로 되는 현상)
     }
 
-    public void createDislike(User user, Board board) {
-        boardLikeRepository.findByBoardIdAndUserIdAndLikeType(board.getId(), user.getId(), LikeType.DISLIKE)
-                .ifPresent(boardLike -> {
-                    throw new IllegalArgumentException("싫어요가 이미 존재합니다.");
-                });
-
-        boardLikeRepository.save(BoardLike.create(user, board, LikeType.DISLIKE));
+    public Optional<BoardLike> findByBoardIdAndUserIdAndLikeType(Long boardId, Long userId, LikeType type) {
+        return boardLikeRepository.findByBoardIdAndUserIdAndLikeType(boardId, userId, type);
     }
+<<<<<<< HEAD
 
 >>>>>>> 354a831 (feat : 좋아요 기능 구현)
+=======
+>>>>>>> e201dad (bug : AOP로 인해 common이 null로 되는 현상)
 }

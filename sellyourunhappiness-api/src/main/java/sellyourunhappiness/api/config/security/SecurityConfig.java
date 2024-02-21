@@ -30,6 +30,7 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 			.csrf(AbstractHttpConfigurer::disable)
@@ -41,6 +42,9 @@ public class SecurityConfig {
 			)
 			.httpBasic(Customizer.withDefaults())
 
+=======
+			.csrf(AbstractHttpConfigurer::disable)
+>>>>>>> f390dc7 (bug : AOP로 인해 common이 null로 되는 현상)
 			.headers((headerConfig) ->
 				headerConfig.frameOptions(FrameOptionsConfig::disable)
 			)
@@ -48,6 +52,7 @@ public class SecurityConfig {
 			.authorizeHttpRequests((authorizeRequests) ->
 				authorizeRequests
 					//.requestMatchers(PathRequest.toH2Console()).permitAll()
+<<<<<<< HEAD
 <<<<<<< HEAD
 					 // 왜 requestMatcher로 permiall을 해줬냐
 					.anyRequest().permitAll()
@@ -57,6 +62,10 @@ public class SecurityConfig {
 =======
 					.requestMatchers("/**").permitAll() // 왜 requestMatcher로 permiall을 해줬냐
 					.anyRequest().authenticated()
+=======
+					 // 왜 requestMatcher로 permiall을 해줬냐
+					.anyRequest().permitAll()
+>>>>>>> e201dad (bug : AOP로 인해 common이 null로 되는 현상)
 			)
 
 >>>>>>> 354a831 (feat : 좋아요 기능 구현)
