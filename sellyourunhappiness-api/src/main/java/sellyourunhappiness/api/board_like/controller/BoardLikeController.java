@@ -28,21 +28,13 @@ public class BoardLikeController {
 
     private final BoardLikeBroker boardLikeBroker;
     private final EnumBean enumBean;
-<<<<<<< HEAD
+
     @PostMapping("/board/{boardId}/like")
     public ApiResponse like(@PathVariable("boardId") Long boardId, @RequestBody BoardLikeParam boardLikeParam,
             @AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
         Map<String, String> map = new HashMap<>();
 
         map.put("message", boardLikeBroker.like(customOAuth2User.getEmail(), boardId, boardLikeParam.type()));
-=======
-    @PostMapping("/board/{boardId}/{type}")
-    public ApiResponse like(@PathVariable("boardId") Long boardId, @PathVariable("type") String type,
-            @AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
-        Map<String, String> map = new HashMap<>();
-
-        map.put("message", boardLikeBroker.like(customOAuth2User.getEmail(), boardId, type));
->>>>>>> e201dad (bug : AOP로 인해 common이 null로 되는 현상)
 
         return ApiResponse.create(map);
     }
