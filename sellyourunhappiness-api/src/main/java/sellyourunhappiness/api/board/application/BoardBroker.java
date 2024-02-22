@@ -1,7 +1,11 @@
 package sellyourunhappiness.api.board.application;
 
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
+
+import lombok.RequiredArgsConstructor;
 import sellyourunhappiness.api.board.dto.BoardRegisterParam;
 import sellyourunhappiness.api.board.dto.BoardResponse;
 import sellyourunhappiness.api.board.dto.BoardSearchCondition;
@@ -10,9 +14,12 @@ import sellyourunhappiness.api.config.page.PageResponse;
 import sellyourunhappiness.core.board.application.BoardService;
 import sellyourunhappiness.core.board.domain.Board;
 import sellyourunhappiness.core.config.page.PageModel;
+<<<<<<< HEAD
 
 import java.util.List;
 import java.util.stream.Collectors;
+=======
+>>>>>>> 1c4343e (Refactoring : 컨트롤러, 테스트코드 ApiResponse 적용 및 시큐리티 수정 (#18))
 
 @Service
 @RequiredArgsConstructor

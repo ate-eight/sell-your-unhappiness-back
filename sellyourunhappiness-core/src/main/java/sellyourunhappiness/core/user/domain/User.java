@@ -35,6 +35,7 @@ public class User {
 	private SocialType socialType;
 	@Enumerated(EnumType.STRING)
 	private UserStatus status;
+	private String accessToken;
 	private String refreshToken;
 
 	@Builder
@@ -58,7 +59,12 @@ public class User {
 			.build();
 	}
 
-	public void updateRefreshToken(String refreshToken) {
+	public void updateJwtToken(String accessToken, String refreshToken) {
+		this.accessToken = accessToken;
 		this.refreshToken = refreshToken;
+	}
+
+	public void updateAccessToken(String accessToken){
+		this.accessToken = accessToken;
 	}
 }
