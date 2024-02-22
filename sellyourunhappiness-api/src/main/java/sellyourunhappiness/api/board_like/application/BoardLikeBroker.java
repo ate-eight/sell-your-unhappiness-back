@@ -6,6 +6,7 @@ import sellyourunhappiness.core.board.application.BoardService;
 import sellyourunhappiness.core.board.domain.Board;
 import sellyourunhappiness.core.board_like.application.BoardLikeService;
 import sellyourunhappiness.core.board_like.domain.enums.LikeType;
+import sellyourunhappiness.core.config.converter.EnumConverterUtils;
 import sellyourunhappiness.core.user.application.UserService;
 import sellyourunhappiness.core.user.domain.User;
 
@@ -21,7 +22,7 @@ public class BoardLikeBroker {
         User user = userService.findByEmail(email);
         Board board = boardService.findById(boardId);
 
-        LikeType likeType = type.equals("like") ? LikeType.LIKE : LikeType.DISLIKE;
+        LikeType likeType = EnumConverterUtils.ofName(LikeType.class, type);
 
         boardLikeService.findByBoardIdAndUserIdAndLikeType(board.getId(), user.getId(), likeType)
                 .ifPresent(boardLike -> {

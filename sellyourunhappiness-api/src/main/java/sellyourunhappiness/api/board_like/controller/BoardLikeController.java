@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import sellyourunhappiness.api.board_like.application.BoardLikeBroker;
 import sellyourunhappiness.api.board_like.dto.BoardLikeParam;
@@ -27,12 +28,12 @@ public class BoardLikeController {
 
     private final BoardLikeBroker boardLikeBroker;
     private final EnumBean enumBean;
-    @PostMapping("/board/{boardId}/{type}")
-    public ApiResponse like(@PathVariable("boardId") Long boardId, @PathVariable("type") String type,
+    @PostMapping("/board/{boardId}/like")
+    public ApiResponse like(@PathVariable("boardId") Long boardId, @RequestBody BoardLikeParam boardLikeParam,
             @AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
         Map<String, String> map = new HashMap<>();
 
-        map.put("message", boardLikeBroker.like(customOAuth2User.getEmail(), boardId, type));
+        map.put("message", boardLikeBroker.like(customOAuth2User.getEmail(), boardId, boardLikeParam.type()));
 
         return ApiResponse.create(map);
     }

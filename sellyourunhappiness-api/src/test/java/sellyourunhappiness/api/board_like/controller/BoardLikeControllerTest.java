@@ -17,6 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceDocumentation;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
@@ -28,6 +29,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.headers.HeaderDocumentation;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
@@ -41,6 +45,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import sellyourunhappiness.api.board.dto.BoardRegisterParam;
 import sellyourunhappiness.api.board_like.application.BoardLikeBroker;
+import sellyourunhappiness.api.board_like.dto.BoardLikeParam;
 import sellyourunhappiness.api.config.enums.EnumBean;
 import sellyourunhappiness.api.config.jwt.application.JwtService;
 import sellyourunhappiness.api.config.response.aspect.ApiResponseAspect;
@@ -54,11 +59,11 @@ import sellyourunhappiness.core.user.domain.enums.Role;
 import sellyourunhappiness.core.user.domain.enums.SocialType;
 import sellyourunhappiness.core.user.domain.enums.UserStatus;
 
-
+@EnableAspectJAutoProxy
+@Import(ApiResponseAspect.class)
 @WebMvcTest(BoardLikeController.class)
 @AutoConfigureRestDocs
 @DisplayName("게시판 좋아요 CRUD API")
-//@WithMockUser(username = "MockLee", roles = {"USER"}) //각자 API마다 권한이 달라지면?
 class BoardLikeControllerTest {
 
     @Autowired
@@ -70,9 +75,6 @@ class BoardLikeControllerTest {
     @MockBean
     private EnumBean enumBean;
 
-    @Autowired
-    private ApiResponseAspect aspect;
-
     @MockBean
     private JwtService jwtService;  //Service로 등록하냐 Component로 등록하냐 왜 이걸 빈으로 해야되냐?
     //운영 코드를 안건드는 선에서 해보면 좋을 듯 하다.
@@ -80,6 +82,8 @@ class BoardLikeControllerTest {
     @MockBean
     private SlackComponent slackComponent;
 
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @BeforeEach
     void setUp() {
@@ -107,16 +111,19 @@ class BoardLikeControllerTest {
     @DisplayName("게시글 좋아요 API")
     void like() throws Exception {
         //given
-        String email = "test";
         Long boardId = 1L;
-        String type = "like";
+
         BDDMockito.given(likeBroker.like(any(String.class), any(Long.class),any(String.class))).willReturn("success");
         //when, then
 
+        BoardLikeParam param = new BoardLikeParam("좋아요");
 
         mockMvc.perform(
-                RestDocumentationRequestBuilders.post("/v1/board/{boardId}/{type}", boardId, type)
+                RestDocumentationRequestBuilders.post("/v1/board/{boardId}/like", boardId)
                         .header("Authorization", "Bearer XXX")
+                        .content(objectMapper.writeValueAsString(param))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
                         .with(csrf())
         )
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -134,9 +141,10 @@ class BoardLikeControllerTest {
                                                 )
                                                 .pathParameters(
                                                         RequestDocumentation.parameterWithName("boardId").description(
-                                                                "게시글 ID"),
-                                                        RequestDocumentation.parameterWithName("type").description(
-                                                                "좋아요 Type")
+                                                                "게시글 ID")
+                                                )
+                                                .requestFields(
+                                                        fieldWithPath("type").type(JsonFieldType.STRING).description("좋아요 타입")
                                                 )
                                                 .responseFields(
                                                         fieldWithPath("common").type(JsonFieldType.OBJECT).description("공통 응답 정보"),
@@ -177,7 +185,13 @@ class BoardLikeControllerTest {
                                         .tag("Like API")
                                         .summary("좋아요 타입 조회")
                                         .responseFields(
-                                                fieldWithPath("types").type(JsonFieldType.ARRAY).description("타입"))
+                                                fieldWithPath("common").type(JsonFieldType.OBJECT).description("공통 응답 정보"),
+                                                fieldWithPath("common.code").type(JsonFieldType.NUMBER).description("HTTP 상태 코드"),
+                                                fieldWithPath("common.message").type(JsonFieldType.STRING).description("에러 메시지"),
+                                                fieldWithPath("common.success").type(JsonFieldType.BOOLEAN).description("성공 여부"),
+                                                fieldWithPath("data").type(JsonFieldType.OBJECT).description("응답 데이터"),
+                                                fieldWithPath("data.types").type(JsonFieldType.ARRAY).description("타입")
+                                        )
                                         .responseSchema(null)
                                         .build())));
     }
