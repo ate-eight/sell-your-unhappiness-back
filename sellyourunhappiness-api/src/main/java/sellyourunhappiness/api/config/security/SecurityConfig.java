@@ -1,25 +1,29 @@
 package sellyourunhappiness.api.config.security;
 
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
 import lombok.RequiredArgsConstructor;
-import sellyourunhappiness.api.config.security.oauth2.application.CustomOAuth2UserService;
+import sellyourunhappiness.api.config.security.handler.CustomOAuth2AccessDeniedHandler;
 import sellyourunhappiness.api.config.security.handler.CustomOAuth2LoginFailureHandler;
 import sellyourunhappiness.api.config.security.handler.CustomOAuth2LoginSuccessHandler;
+import sellyourunhappiness.api.config.security.oauth2.application.CustomOAuth2UserService;
 
 
 @RequiredArgsConstructor
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
 	private final CustomOAuth2UserService customOAuth2UserService;
 	private final CustomOAuth2LoginSuccessHandler customOAuth2LoginSuccessHandler;
 	private final CustomOAuth2LoginFailureHandler customOAuth2LoginFailureHandler;
+	private final CustomOAuth2AccessDeniedHandler customOAuth2AccessDeniedHandler;
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -27,18 +31,11 @@ public class SecurityConfig {
 			.csrf((csrfConfig) ->
 				csrfConfig.disable()
 			)
+			.httpBasic(Customizer.withDefaults())
 			.headers((headerConfig) ->
 				headerConfig.frameOptions(frameOptionsConfig ->
 					frameOptionsConfig.disable()
 				)
-			)
-			.authorizeHttpRequests((authorizeRequests) ->
-				authorizeRequests
-					.requestMatchers(PathRequest.toH2Console()).permitAll()
-					.requestMatchers("/", "/login/**").permitAll()
-					.requestMatchers("/v1/**").permitAll()
-					.requestMatchers("/docs/**").permitAll()
-					.anyRequest().authenticated()
 			)
 			.logout((logoutConfig) ->
 				logoutConfig.logoutSuccessUrl("/")
@@ -50,7 +47,10 @@ public class SecurityConfig {
 					)
 					.successHandler(customOAuth2LoginSuccessHandler)
 					.failureHandler(customOAuth2LoginFailureHandler);
-			});
+			})
+			.exceptionHandling(exceptionHandling ->
+				exceptionHandling.accessDeniedHandler(customOAuth2AccessDeniedHandler)
+			);
 		return http.build();
 	}
 }

@@ -1,5 +1,7 @@
 package sellyourunhappiness.api.config.security.handler;
 
+import java.io.IOException;
+
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -29,7 +31,8 @@ public class CustomOAuth2LoginSuccessHandler implements AuthenticationSuccessHan
 			User user = userService.findByEmail(email);
 
 			if (user.getAccessToken() == null) {
-				generateAndSaveTokens(response, user);
+				generateAndSaveTokens(user);
+				response.sendRedirect("/v1/login/success");
 			} else if (jwtService.isTokenExpired(user.getAccessToken())){
 				handleTokenRenewal(response,user);
 			} else {
@@ -40,7 +43,7 @@ public class CustomOAuth2LoginSuccessHandler implements AuthenticationSuccessHan
 		}
 	}
 
-	private void handleTokenRenewal(HttpServletResponse response, User user) {
+	private void handleTokenRenewal(HttpServletResponse response, User user) throws IOException {
 		if (!jwtService.isTokenValid(user.getRefreshToken())) {
 			throw new AccessDeniedException("토큰이 유효하지 않습니다. 다시 로그인해주세요.");
 		}
@@ -51,20 +54,19 @@ public class CustomOAuth2LoginSuccessHandler implements AuthenticationSuccessHan
 		tokenValidity(response, user);
 	}
 
-	private void tokenValidity(HttpServletResponse response, User user) {
+	private void tokenValidity(HttpServletResponse response, User user) throws IOException {
 		if (jwtService.getRemainingDays(user.getRefreshToken()) <= 3) {
-			generateAndSaveTokens(response, user);
+			generateAndSaveTokens(user);
 		} else {
 			String newAccessToken = jwtService.createAccessToken(user.getEmail());
 			jwtService.updateAccessToken(user.getEmail(), newAccessToken);
-			jwtService.sendAccessAndRefreshToken(response, newAccessToken, user.getRefreshToken());
+			response.sendRedirect("/v1/login/success");
 		}
 	}
 
-	private void generateAndSaveTokens(HttpServletResponse response, User user) {
+	private void generateAndSaveTokens(User user){
 		String newAccessToken = jwtService.createAccessToken(user.getEmail());
 		String newRefreshToken = jwtService.createRefreshToken();
 		jwtService.updateJwtToken(user.getEmail(), newAccessToken, newRefreshToken);
-		jwtService.sendAccessAndRefreshToken(response, newAccessToken, newRefreshToken);
 	}
 }

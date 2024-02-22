@@ -13,7 +13,6 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -56,21 +55,6 @@ public class JwtService {
 			.withSubject(REFRESH_TOKEN_SUBJECT)
 			.withExpiresAt(new Date(now.getTime() + refreshTokenExpirationPeriod))
 			.sign(Algorithm.HMAC512(secretKey));
-	}
-
-	public void sendAccessAndRefreshToken(HttpServletResponse response, String accessToken, String refreshToken) {
-		response.setStatus(HttpServletResponse.SC_OK);
-
-		setAccessTokenHeader(response, accessToken);
-		setRefreshTokenHeader(response, refreshToken);
-	}
-
-	private void setAccessTokenHeader(HttpServletResponse response, String accessToken) {
-		response.setHeader(accessHeader, accessToken);
-	}
-
-	private void setRefreshTokenHeader(HttpServletResponse response, String refreshToken) {
-		response.setHeader(refreshHeader, refreshToken);
 	}
 
 	@Transactional
