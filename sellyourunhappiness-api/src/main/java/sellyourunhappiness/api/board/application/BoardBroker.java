@@ -1,7 +1,11 @@
 package sellyourunhappiness.api.board.application;
 
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
+
+import lombok.RequiredArgsConstructor;
 import sellyourunhappiness.api.board.dto.BoardRegisterParam;
 import sellyourunhappiness.api.board.dto.BoardResponse;
 import sellyourunhappiness.api.board.dto.BoardSearchCondition;
@@ -10,10 +14,6 @@ import sellyourunhappiness.api.config.page.PageResponse;
 import sellyourunhappiness.core.board.application.BoardService;
 import sellyourunhappiness.core.board.domain.Board;
 import sellyourunhappiness.core.config.page.PageModel;
-import sellyourunhappiness.core.member.application.MemberService;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

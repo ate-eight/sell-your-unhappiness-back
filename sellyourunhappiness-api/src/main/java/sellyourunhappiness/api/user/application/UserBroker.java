@@ -36,4 +36,11 @@ public class UserBroker {
 		}
 		return userService.save(name, email, profileUrl, socialType);
 	}
+
+	public Map<String, String> generateAndReturnTokens(String email) {
+		String accessToken = jwtService.createAccessToken(email);
+		String refreshToken = jwtService.createRefreshToken();
+
+		return Map.of("accessToken", accessToken, "refreshToken", refreshToken);
+	}
 }

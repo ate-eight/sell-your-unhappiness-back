@@ -3,11 +3,11 @@ name: CI-CD
 on:
   push:
     branches:
-      - feat/githubactions
+      - main
 
 env:
   S3_BUCKET_NAME: sellyourunhappiness-github-actions
-  RESOURCE_PATH: ./sellyourunhappiness/sellyourunhappiness-core/src/main/resources/application.yml
+  RESOURCE_PATH: ./sellyourunhappiness/sellyourunhappiness-core/src/main/resources/application-api.yml
   CODE_DEPLOY_APPLICATION_NAME: Sellyourunhappiness
   CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: Sellyourunhappiness-server
 
