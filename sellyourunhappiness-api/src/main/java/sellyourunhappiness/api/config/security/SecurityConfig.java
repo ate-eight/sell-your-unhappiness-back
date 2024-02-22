@@ -6,6 +6,8 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
 import org.springframework.security.web.SecurityFilterChain;
 
 import lombok.RequiredArgsConstructor;
@@ -28,14 +30,11 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
-			.csrf((csrfConfig) ->
-				csrfConfig.disable()
-			)
+			.csrf(AbstractHttpConfigurer::disable)
 			.httpBasic(Customizer.withDefaults())
+			.csrf(AbstractHttpConfigurer::disable)
 			.headers((headerConfig) ->
-				headerConfig.frameOptions(frameOptionsConfig ->
-					frameOptionsConfig.disable()
-				)
+				headerConfig.frameOptions(FrameOptionsConfig::disable)
 			)
 			.logout((logoutConfig) ->
 				logoutConfig.logoutSuccessUrl("/")

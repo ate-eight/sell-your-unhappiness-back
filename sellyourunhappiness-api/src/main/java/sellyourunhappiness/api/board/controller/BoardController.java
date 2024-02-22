@@ -1,6 +1,7 @@
 package sellyourunhappiness.api.board.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import sellyourunhappiness.api.board.application.BoardBroker;
 import sellyourunhappiness.api.board.dto.BoardRegisterParam;
@@ -29,6 +30,8 @@ public class BoardController {
     private final EnumBean enumBean;
 
     @PostMapping("/board")
+    //여기다가 적으면 가시성이 좋아진다.
+    //@PreAuthorize()
     public ApiResponse register(@RequestBody BoardRegisterParam param) {
         Map<String, String> map = new HashMap<>();
 

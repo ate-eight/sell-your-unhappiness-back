@@ -1,5 +1,10 @@
 package sellyourunhappiness.api.board.controller;
 
+
+import com.epages.restdocs.apispec.ResourceSnippetParameters;
+import com.epages.restdocs.apispec.SimpleType;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.*;
 import static com.epages.restdocs.apispec.ResourceDocumentation.*;
 import static org.mockito.ArgumentMatchers.*;
@@ -12,7 +17,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +40,56 @@ import sellyourunhappiness.api.board.dto.BoardSearchCondition;
 import sellyourunhappiness.api.board.dto.BoardSearchResponse;
 import sellyourunhappiness.api.config.MvcTestConfig;
 import sellyourunhappiness.api.config.enums.EnumBean;
+import sellyourunhappiness.api.config.jwt.application.JwtService;
 import sellyourunhappiness.api.config.page.PageResponse;
 import sellyourunhappiness.api.config.page.PageValue;
+import sellyourunhappiness.api.config.slack.component.SlackComponent;
 import sellyourunhappiness.core.board.domain.enums.BoardType;
+import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.*;
+import static com.epages.restdocs.apispec.ResourceDocumentation.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.BDDMockito.*;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
+import org.springframework.context.annotation.Import;
+import sellyourunhappiness.api.config.MvcTestConfig;
+
+
+import com.epages.restdocs.apispec.ResourceSnippetParameters;
+import com.epages.restdocs.apispec.SimpleType;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
+import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.test.web.servlet.MockMvc;
+import sellyourunhappiness.api.board.application.BoardBroker;
+import sellyourunhappiness.api.board.dto.BoardRegisterParam;
+import sellyourunhappiness.api.board.dto.BoardResponse;
+import sellyourunhappiness.api.board.dto.BoardSearchCondition;
+import sellyourunhappiness.api.board.dto.BoardSearchResponse;
+import sellyourunhappiness.api.config.enums.EnumBean;
+import sellyourunhappiness.api.config.jwt.application.JwtService;
+import sellyourunhappiness.api.config.page.PageResponse;
+import sellyourunhappiness.api.config.page.PageValue;
+import sellyourunhappiness.api.config.slack.component.SlackComponent;
+import sellyourunhappiness.core.board.domain.enums.BoardType;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
+import org.springframework.context.annotation.Import;
+import sellyourunhappiness.api.config.MvcTestConfig;
 
 @WebMvcTest(BoardController.class)
 @AutoConfigureRestDocs
@@ -57,7 +108,10 @@ class BoardControllerTest {
 
     @MockBean
     private EnumBean enumBean;
-
+    @MockBean
+    private JwtService jwtService;
+    @MockBean
+    private SlackComponent slackComponent;
     @Test
     @DisplayName("게시글 저장 API")
     void register() throws Exception {
