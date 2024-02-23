@@ -10,5 +10,4 @@ class SellyourunhappinessCoreApplicationTests {
     @Test
     void contextLoads() {
     }
-
 }
