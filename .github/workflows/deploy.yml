@@ -36,7 +36,7 @@ jobs:
         # [3]
       - name: Create application.yml
         run: |
-          echo "${{ secrets.APPLICATION_YML_CONTENT }}" > ./sellyourunhappiness/sellyourunhappiness-api/src/main/resources/application-api.yml
+          echo "${{ secrets.APPLICATION_YML_CONTENT }}" > ./sellyourunhappiness-api/src/main/resources/application-api.yml
 
         # [4]
       - name: Make zip file
