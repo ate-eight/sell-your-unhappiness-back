@@ -81,8 +81,7 @@ public class UserControllerTest {
 						fieldWithPath("common.code").type(JsonFieldType.NUMBER).description("응답 코드"),
 						fieldWithPath("common.success").type(JsonFieldType.BOOLEAN).description("성공 여부")
 					)
-					.responseSchema(null).build())
-			));
+					.responseSchema(null).build())));
 
 		SecurityContextHolder.clearContext();
 	}
@@ -119,8 +118,7 @@ public class UserControllerTest {
 						fieldWithPath("common.code").type(JsonFieldType.NUMBER).description("응답 코드"),
 						fieldWithPath("common.success").type(JsonFieldType.BOOLEAN).description("성공 여부")
 					)
-					.responseSchema(null).build())
-			));
+					.responseSchema(null).build())));
 
 		SecurityContextHolder.clearContext();
 	}
