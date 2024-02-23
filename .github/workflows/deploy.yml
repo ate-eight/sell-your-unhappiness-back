@@ -7,7 +7,7 @@ on:
 
 env:
   S3_BUCKET_NAME: sellyourunhappiness-github-actions
-  RESOURCE_PATH: ./sellyourunhappiness/sellyourunhappiness-core/src/main/resources/application-api.yml
+  RESOURCE_PATH: ./sellyourunhappiness/sellyourunhappiness-api/src/main/resources/application-api.yml
   CODE_DEPLOY_APPLICATION_NAME: Sellyourunhappiness
   CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: Sellyourunhappiness-server
 
@@ -29,16 +29,21 @@ jobs:
         shell: bash
 
         # [2]
+      - name: Create application.yml
+        run: |
+          echo "${{ secrets.APPLICATION_YML_CONTENT }}" > ./sellyourunhappiness/sellyourunhappiness-api/src/main/resources/application-api.yml
+
+        # [3]
       - name: Build with Gradle
         run: ./gradlew clean :sellyourunhappiness-api:buildNeeded --stacktrace --info -x test
         shell: bash
 
-        # [3]
+        # [4]
       - name: Make zip file
         run: zip -r ./$GITHUB_SHA.zip .
         shell: bash
 
-        # [4]
+        # [5]
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -46,11 +51,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-        # [5]
+        # [6]
       - name: Upload to S3
         run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$S3_BUCKET_NAME/$GITHUB_SHA.zip
 
-        # [6]
+        # [7]
       - name: Code Deploy
         run: |
           aws deploy create-deployment \
