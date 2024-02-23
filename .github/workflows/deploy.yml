@@ -28,15 +28,15 @@ jobs:
         run: chmod +x ./gradlew
         shell: bash
 
-        # [2]
-      - name: Create application.yml
-        run: |
-          echo "${{ secrets.APPLICATION_YML_CONTENT }}" > ./sellyourunhappiness/sellyourunhappiness-api/src/main/resources/application-api.yml
-
-        # [3]
+      # [2]
       - name: Build with Gradle
         run: ./gradlew clean :sellyourunhappiness-api:buildNeeded --stacktrace --info -x test
         shell: bash
+
+        # [3]
+      - name: Create application.yml
+        run: |
+          echo "${{ secrets.APPLICATION_YML_CONTENT }}" > ./sellyourunhappiness/sellyourunhappiness-api/src/main/resources/application-api.yml
 
         # [4]
       - name: Make zip file
