@@ -27,7 +27,7 @@ public class BoardCommentController {
     public ApiResponse register(@RequestBody BoardCommentRegisterParam param) {
         Map<String, String> map = new HashMap<>();
 
-        map.put("code", boardCommentBroker.save(param));
+        map.put("message", boardCommentBroker.save(param));
 
         return create(map);
     }
