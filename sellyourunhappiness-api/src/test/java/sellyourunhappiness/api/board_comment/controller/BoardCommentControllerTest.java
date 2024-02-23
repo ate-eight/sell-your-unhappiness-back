@@ -1,8 +1,19 @@
 package sellyourunhappiness.api.board_comment.controller;
 
-import com.epages.restdocs.apispec.ResourceSnippetParameters;
-import com.epages.restdocs.apispec.SimpleType;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.*;
+import static com.epages.restdocs.apispec.ResourceDocumentation.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.BDDMockito.*;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,6 +30,11 @@ import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
+
+import com.epages.restdocs.apispec.ResourceSnippetParameters;
+import com.epages.restdocs.apispec.SimpleType;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import sellyourunhappiness.api.board_comment.application.BoardCommentBroker;
 import sellyourunhappiness.api.board_comment.dto.BoardCommentRegisterParam;
 import sellyourunhappiness.api.board_comment.dto.BoardCommentResponse;
@@ -30,22 +46,6 @@ import sellyourunhappiness.core.user.domain.User;
 import sellyourunhappiness.core.user.domain.enums.Role;
 import sellyourunhappiness.core.user.domain.enums.SocialType;
 import sellyourunhappiness.core.user.domain.enums.UserStatus;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
-import static com.epages.restdocs.apispec.ResourceDocumentation.parameterWithName;
-import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @EnableAspectJAutoProxy
 @AutoConfigureRestDocs
@@ -111,11 +111,11 @@ class BoardCommentControllerTest {
                                                 fieldWithPath("boardId").type(JsonFieldType.NUMBER).description("게시글 ID"),
                                                 fieldWithPath("content").type(JsonFieldType.STRING).description("댓글 내용"))
                                         .responseFields(
-                                                fieldWithPath("common").type(JsonFieldType.OBJECT),
+                                                fieldWithPath("common").type(JsonFieldType.OBJECT).description("공통 응답 객체"),
                                                 fieldWithPath("common.code").type(JsonFieldType.NUMBER).description("HTTP 상태"),
                                                 fieldWithPath("common.message").type(JsonFieldType.STRING).description("에러 메시지"),
                                                 fieldWithPath("common.success").type(JsonFieldType.BOOLEAN).description("성공 여부"),
-                                                fieldWithPath("data").type(JsonFieldType.OBJECT),
+                                                fieldWithPath("data").type(JsonFieldType.OBJECT).description("응답 데이터 객체"),
                                                 fieldWithPath("data.message").type(JsonFieldType.STRING).description("성공 또는 실패"))
                                         .requestSchema(null)
                                         .responseSchema(null)
@@ -160,12 +160,12 @@ class BoardCommentControllerTest {
                                         .queryParameters(
                                                 parameterWithName("boardId").type(SimpleType.NUMBER).description("게시글 아이디"))
                                         .responseFields(
-                                                fieldWithPath("common").type(JsonFieldType.OBJECT),
+                                                fieldWithPath("common").type(JsonFieldType.OBJECT).description("공통 응답 객체"),
                                                 fieldWithPath("common.code").type(JsonFieldType.NUMBER).description("HTTP 상태"),
                                                 fieldWithPath("common.message").type(JsonFieldType.STRING).description("에러 메시지"),
                                                 fieldWithPath("common.success").type(JsonFieldType.BOOLEAN).description("성공 여부"),
-                                                fieldWithPath("data").type(JsonFieldType.OBJECT),
-                                                fieldWithPath("data.contents").type(JsonFieldType.ARRAY),
+                                                fieldWithPath("data").type(JsonFieldType.OBJECT).description("응답 데이터 객체"),
+                                                fieldWithPath("data.contents").type(JsonFieldType.ARRAY).description(""),
                                                 fieldWithPath("data.contents[].id").type(JsonFieldType.NUMBER).description(""),
                                                 fieldWithPath("data.contents[].parentId").type(JsonFieldType.NUMBER).description(""),
                                                 fieldWithPath("data.contents[].content").type(JsonFieldType.STRING).description(""),
