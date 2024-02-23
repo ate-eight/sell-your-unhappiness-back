@@ -1,6 +1,6 @@
 #!/bin/bash
 PROJECT_NAME="sellyourunhappiness"
-JAR_PATH="/sellyourunhappiness/sellyourunhappiness-api/build/libs/*.jar"
+JAR_PATH="/home/ubuntu/$PROJECT_NAME/sellyourunhappiness-api/build/libs/*.jar"
 DEPLOY_PATH=/home/ubuntu/$PROJECT_NAME/
 DEPLOY_LOG_PATH="/home/ubuntu/$PROJECT_NAME/deploy.log"
 DEPLOY_ERR_LOG_PATH="/home/ubuntu/$PROJECT_NAME/deploy_err.log"
