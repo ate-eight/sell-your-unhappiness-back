@@ -9,5 +9,4 @@ class SellyourunhappinessApiApplicationTests {
     @Test
     void contextLoads() {
     }
-
 }
