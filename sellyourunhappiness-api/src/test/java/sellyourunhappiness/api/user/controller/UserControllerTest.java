@@ -39,6 +39,7 @@ import sellyourunhappiness.core.user.domain.enums.Role;
 
 @EnableAspectJAutoProxy
 @AutoConfigureRestDocs
+@DisplayName("로그인 API")
 @Import({MvcTestConfig.class, ApiResponseAspect.class})
 @WebMvcTest(UserController.class)
 public class UserControllerTest {
