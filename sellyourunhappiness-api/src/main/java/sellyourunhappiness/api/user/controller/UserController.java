@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 import sellyourunhappiness.api.config.response.annotation.ApiResponseAnnotation;
 import sellyourunhappiness.api.config.response.aspect.dto.ApiResponse;
-import sellyourunhappiness.api.config.response.aspect.dto.ApiResponseCommon;
 import sellyourunhappiness.api.config.security.oauth2.CustomOAuth2User;
 import sellyourunhappiness.api.user.application.UserBroker;
 import sellyourunhappiness.api.user.dto.UserResponse;
@@ -28,7 +27,7 @@ public class UserController {
 	public ApiResponse getUserInfo(@AuthenticationPrincipal CustomOAuth2User customOAuth2User) {
 		UserResponse response = userBroker.getUserByEmail(customOAuth2User.getEmail());
 
-		return ApiResponse.create(ApiResponseCommon.success(),response);
+		return ApiResponse.create(response);
 	}
 
 	@PreAuthorize("isAuthenticated()")
@@ -37,7 +36,7 @@ public class UserController {
 		String email = customOAuth2User.getEmail();
 		Map<String, String> tokens = userBroker.generateAndReturnTokens(email);
 
-		return ApiResponse.create(ApiResponseCommon.success(),tokens);
+		return ApiResponse.create(tokens);
 	}
 
 	@PreAuthorize("hasRole('USER')")
@@ -45,6 +44,6 @@ public class UserController {
 	public ApiResponse refreshAccessToken(@RequestHeader("Refresh-Token") String refreshToken) {
 		Map<String, String> tokens = userBroker.refreshAccessToken(refreshToken);
 
-		return ApiResponse.create(ApiResponseCommon.success(),tokens);
+		return ApiResponse.create(tokens);
 	}
 }

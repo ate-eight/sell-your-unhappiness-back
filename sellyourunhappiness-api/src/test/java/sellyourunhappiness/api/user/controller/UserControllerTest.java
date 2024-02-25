@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
@@ -30,13 +31,15 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 
 import sellyourunhappiness.api.config.MvcTestConfig;
+import sellyourunhappiness.api.config.response.aspect.ApiResponseAspect;
 import sellyourunhappiness.api.config.security.oauth2.CustomOAuth2User;
 import sellyourunhappiness.api.user.application.UserBroker;
 import sellyourunhappiness.api.user.dto.UserResponse;
 import sellyourunhappiness.core.user.domain.enums.Role;
 
+@EnableAspectJAutoProxy
 @AutoConfigureRestDocs
-@Import(MvcTestConfig.class)
+@Import({MvcTestConfig.class, ApiResponseAspect.class})
 @WebMvcTest(UserController.class)
 public class UserControllerTest {
 	@Autowired
@@ -115,6 +118,42 @@ public class UserControllerTest {
 					.responseFields(
 						fieldWithPath("data.accessToken").type(JsonFieldType.STRING).description("새로 발급된 액세스 토큰"),
 						fieldWithPath("common.message").type(JsonFieldType.STRING).optional().description("응답 메시지 (선택 사항)"),
+						fieldWithPath("common.code").type(JsonFieldType.NUMBER).description("응답 코드"),
+						fieldWithPath("common.success").type(JsonFieldType.BOOLEAN).description("성공 여부")
+					)
+					.responseSchema(null).build())));
+
+		SecurityContextHolder.clearContext();
+	}
+
+	@DisplayName("로그인 성공 후 토큰 반환 API 테스트")
+	@Test
+	public void shouldHandleAuthenticationSuccess() throws Exception {
+		// Given
+		setupMockSecurityContextWithRole("dbscks9793@gmail.com", Role.USER);
+		Map<String, String> tokens = Map.of(
+			"accessToken", "mockAccessToken",
+			"refreshToken", "mockRefreshToken"
+		);
+		when(userBroker.generateAndReturnTokens("dbscks9793@gmail.com")).thenReturn(tokens);
+
+		// When & Then
+		mockMvc.perform(RestDocumentationRequestBuilders.get("/v1/login/success")
+				.with(csrf())
+				.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.data.accessToken").value("mockAccessToken"))
+			.andExpect(jsonPath("$.data.refreshToken").value("mockRefreshToken"))
+			.andDo(document("login-success",
+				preprocessRequest(prettyPrint()),
+				preprocessResponse(prettyPrint()),
+				resource(ResourceSnippetParameters.builder()
+					.tag("User API")
+					.summary("로그인 성공 후 토큰 반환 API")
+					.responseFields(
+						fieldWithPath("data.accessToken").type(JsonFieldType.STRING).description("발급된 액세스 토큰"),
+						fieldWithPath("data.refreshToken").type(JsonFieldType.STRING).description("발급된 리프레시 토큰"),
+						fieldWithPath("common.message").type(JsonFieldType.STRING).optional().description("응답 메시지"),
 						fieldWithPath("common.code").type(JsonFieldType.NUMBER).description("응답 코드"),
 						fieldWithPath("common.success").type(JsonFieldType.BOOLEAN).description("성공 여부")
 					)

@@ -4,10 +4,12 @@ on:
   push:
     branches:
       - feat/log
+  pull_request:
+    branches:
+      - dev
 
 env:
   S3_BUCKET_NAME: sellyourunhappiness-github-actions
-  RESOURCE_PATH: ./sellyourunhappiness/sellyourunhappiness-api/src/main/resources/application-api.yml
   CODE_DEPLOY_APPLICATION_NAME: Sellyourunhappiness
   CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: Sellyourunhappiness-server
 
