@@ -2,7 +2,6 @@ package sellyourunhappiness.api.config.security.handler;
 
 import java.io.IOException;
 
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Service;
@@ -44,12 +43,9 @@ public class CustomOAuth2LoginSuccessHandler implements AuthenticationSuccessHan
 	}
 
 	private void handleTokenRenewal(HttpServletResponse response, User user) throws IOException {
-		if (!jwtService.isTokenValid(user.getRefreshToken())) {
-			throw new AccessDeniedException("토큰이 유효하지 않습니다. 다시 로그인해주세요.");
-		}
-
-		if (jwtService.isTokenExpired(user.getRefreshToken())) {
-			throw new AccessDeniedException("토큰이 만료되었습니다. 다시 로그인해주세요.");
+		if (!jwtService.isTokenValid(user.getRefreshToken()) || jwtService.isTokenExpired(user.getRefreshToken())) {
+			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "토큰이 유효하지 않습니다. 다시 로그인해주세요.");
+			return;
 		}
 		tokenValidity(response, user);
 	}
