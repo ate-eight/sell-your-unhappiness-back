@@ -155,7 +155,7 @@ class BoardLikeControllerTest {
                                 ,preprocessResponse(prettyPrint())
                                 , ResourceDocumentation.resource(
                                         ResourceSnippetParameters.builder()
-                                                .tag("Board API")
+                                                .tag("Like API")
                                                 .summary("게시글 좋아요")
                                                 .requestHeaders(
                                                         HeaderDocumentation.headerWithName("Authorization").description("Basic auth credentials")
