@@ -35,7 +35,7 @@ jobs:
 
         # [3]
       - name: Build with Gradle
-        run: ./gradlew clean :sellyourunhappiness-api:buildNeeded --stacktrace --info -x test
+        run: ./gradlew clean build
         shell: bash
 
         # [4]
