@@ -29,6 +29,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import sellyourunhappiness.api.config.MvcTestConfig;
 import sellyourunhappiness.api.config.response.aspect.ApiResponseAspect;
@@ -161,5 +162,48 @@ public class UserControllerTest {
 					.responseSchema(null).build())));
 
 		SecurityContextHolder.clearContext();
+	}
+
+	@DisplayName("로그인 테스트 API")
+	@Test
+	public void shouldReturnTokensForEmail() throws Exception {
+		// Given
+		String email = "dbscks9793@gmail.com";
+		setupMockSecurityContextWithRole(email, Role.USER);
+		Map<String, String> tokens = Map.of(
+			"accessToken", "mockAccessToken",
+			"refreshToken", "mockRefreshToken"
+		);
+		when(userBroker.generateAndReturnTokens(email)).thenReturn(tokens);
+
+		Map<String, String> requestBody = Map.of("email", email);
+		String requestBodyJson = new ObjectMapper().writeValueAsString(requestBody);
+
+		// When & Then
+		mockMvc.perform(RestDocumentationRequestBuilders.post("/v1/user/login-test")
+				.with(csrf())
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(requestBodyJson)
+				.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.data.accessToken").value("mockAccessToken"))
+			.andExpect(jsonPath("$.data.refreshToken").value("mockRefreshToken"))
+			.andDo(document("login-test",
+				preprocessRequest(prettyPrint()),
+				preprocessResponse(prettyPrint()),
+				resource(ResourceSnippetParameters.builder()
+					.tag("User API")
+					.summary("이메일을 통한 로그인 테스트 API")
+					.requestFields(
+						fieldWithPath("email").type(JsonFieldType.STRING).description("사용자 이메일")
+					)
+					.responseFields(
+						fieldWithPath("data.accessToken").type(JsonFieldType.STRING).description("발급된 액세스 토큰"),
+						fieldWithPath("data.refreshToken").type(JsonFieldType.STRING).description("발급된 리프레시 토큰"),
+						fieldWithPath("common.message").type(JsonFieldType.STRING).optional().description("응답 메시지"),
+						fieldWithPath("common.code").type(JsonFieldType.NUMBER).description("응답 코드"),
+						fieldWithPath("common.success").type(JsonFieldType.BOOLEAN).description("성공 여부")
+					)
+					.responseSchema(null).build())));
 	}
 }

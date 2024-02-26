@@ -6,6 +6,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -43,6 +44,14 @@ public class UserController {
 	@PostMapping("/v1/user/token-refresh")
 	public ApiResponse refreshAccessToken(@RequestHeader("Refresh-Token") String refreshToken) {
 		Map<String, String> tokens = userBroker.refreshAccessToken(refreshToken);
+
+		return ApiResponse.create(tokens);
+	}
+
+	@PostMapping("/v1/user/login-test")
+	public ApiResponse loginTest(@RequestBody Map<String, String> requestBody) {
+		String email = requestBody.get("email");
+		Map<String, String> tokens = userBroker.generateAndReturnTokens(email);
 
 		return ApiResponse.create(tokens);
 	}
