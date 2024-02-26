@@ -140,7 +140,7 @@ class BoardLikeControllerTest {
 
 
         mockMvc.perform(
-                RestDocumentationRequestBuilders.post("/v1/board/{boardId}/{type}", boardId, type)
+                RestDocumentationRequestBuilders.post("/v1/board/{boardId}/like", boardId)
                         .header("Authorization", "Bearer XXX")
                         .content(objectMapper.writeValueAsString(param))
                         .contentType(MediaType.APPLICATION_JSON)
@@ -162,9 +162,7 @@ class BoardLikeControllerTest {
                                                 )
                                                 .pathParameters(
                                                         RequestDocumentation.parameterWithName("boardId").description(
-                                                                "게시글 ID"),
-                                                        RequestDocumentation.parameterWithName("type").description(
-                                                                "좋아요 Type")
+                                                                "게시글 ID")
                                                 )
                                                 .responseFields(
                                                         fieldWithPath("common").type(JsonFieldType.OBJECT).description("공통 응답 정보"),
@@ -176,14 +174,6 @@ class BoardLikeControllerTest {
                                                 )
                                                 .requestFields(
                                                         fieldWithPath("type").type(JsonFieldType.STRING).description("좋아요 타입")
-                                                )
-                                                .responseFields(
-                                                        fieldWithPath("common").type(JsonFieldType.OBJECT).description("공통 응답 정보"),
-                                                        fieldWithPath("common.code").type(JsonFieldType.NUMBER).description("HTTP 상태 코드"),
-                                                        fieldWithPath("common.message").type(JsonFieldType.STRING).description("에러 메시지"),
-                                                        fieldWithPath("common.success").type(JsonFieldType.BOOLEAN).description("성공 여부"),
-                                                        fieldWithPath("data").type(JsonFieldType.OBJECT).description("응답 데이터"),
-                                                        fieldWithPath("data.message").type(JsonFieldType.STRING).description("데이터 메시지")
                                                 )
                                                 .requestSchema(null)
                                                 .responseSchema(null)
