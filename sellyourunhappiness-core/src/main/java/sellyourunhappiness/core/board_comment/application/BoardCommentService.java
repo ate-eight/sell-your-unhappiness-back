@@ -20,7 +20,7 @@ public class BoardCommentService {
     @Transactional
     public BoardComment save(Long parentId, Long boardId, String content) {
         if (parentId != null) {
-            boardCommentRepository.findByParentIdAndBoardId(parentId, boardId)
+            boardCommentRepository.findByIdAndBoardId(parentId, boardId)
                     .orElseThrow(() -> new IllegalArgumentException("상위 댓글이 존재하지 않습니다."));
         }
 
