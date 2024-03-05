@@ -16,6 +16,7 @@ import sellyourunhappiness.api.config.slack.utils.SlackFieldsUtils;
 @ControllerAdvice
 public class ErrorDetectAdvisor {
 	private final SlackComponent slackComponent;
+
 	@ExceptionHandler(Exception.class)
 	public void handleException(HttpServletRequest req, Exception e) throws Exception {
 		SlackAttachmentModel attachmentModel = SlackAttachmentModel.builder()
