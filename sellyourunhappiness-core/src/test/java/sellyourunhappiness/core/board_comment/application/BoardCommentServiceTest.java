@@ -1,5 +1,11 @@
 package sellyourunhappiness.core.board_comment.application;
 
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+
+import java.util.Optional;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -7,14 +13,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import sellyourunhappiness.core.board_comment.infrastructure.BoardCommentRepository;
-
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 
 @Nested
 @ExtendWith(MockitoExtension.class)
@@ -31,7 +31,7 @@ class BoardCommentServiceTest {
     @DisplayName("댓글 등록시 null이 아닐때 상위 댓글이 없는 경우")
     void findByIdException() {
         //given
-        when(boardCommentRepository.findByParentIdAndBoardId(any(Long.class), any(Long.class))).thenReturn(Optional.empty());
+        when(boardCommentRepository.findByIdAndBoardId(any(Long.class), any(Long.class))).thenReturn(Optional.empty());
 
         //when, then
         assertThatThrownBy(() -> boardCommentService.save(1L, 1L, "테스트내용"))
