@@ -1,18 +1,18 @@
 package sellyourunhappiness.core.board_comment.infrastructure;
 
+import static org.assertj.core.api.Assertions.*;
+import static sellyourunhappiness.core.board_comment.domain.BoardComment.*;
+
+import java.util.List;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
 import sellyourunhappiness.core.board_comment.domain.BoardComment;
-
-import java.util.List;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static sellyourunhappiness.core.board_comment.domain.BoardComment.create;
 
 @Nested
 @SpringBootTest
@@ -83,7 +83,7 @@ class BoardCommentRepositoryTest {
         boardCommentRepository.save(request);
 
         //when
-        BoardComment boardComment = boardCommentRepository.findByParentIdAndBoardId(0L, 1L).get();
+        BoardComment boardComment = boardCommentRepository.findByIdAndBoardId(0L, 1L).get();
 
         //then
         assertThat(boardComment.getParentId()).isEqualTo(0L);
