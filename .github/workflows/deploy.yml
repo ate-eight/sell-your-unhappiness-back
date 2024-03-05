@@ -38,6 +38,7 @@ jobs:
 
       - name: Create application-core.yml
         run: |
+          mkdir -p ./sellyourunhappiness-core/src/main/resources
           echo "${{ secrets.APPLICATION_CORE_YML_CONTENT }}" > ./sellyourunhappiness-core/src/main/resources/application-core.yml
           
         # [3]
