@@ -224,8 +224,8 @@ class BoardControllerTest {
                         .tag("Board API")
                         .summary("게시글 전체 조회")
                         .queryParameters(
-                            parameterWithName("type").type(SimpleType.STRING).description("게시글 타입"),
-                            parameterWithName("status").type(SimpleType.STRING).description("게시글 상태"),
+                            parameterWithName("type").type(SimpleType.STRING).description("게시글 타입").optional(),
+                            parameterWithName("status").type(SimpleType.STRING).description("게시글 상태").optional(),
                             parameterWithName("page").type(SimpleType.NUMBER).description("페이지 번호"))
                         .responseFields(
                             fieldWithPath("common").type(JsonFieldType.OBJECT).description("공통 응답 객체"),
